@@ -1,0 +1,156 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с продукти
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row row--main" ng-if="products.length">
+			<div class="sidebar__button-open do-show-filters">
+				<a href="javascript:;">
+					Покажи филтри
+				</a>
+			</div>
+			<aside class="sidebar medium-12 large-3 columns do-filters-to-open">
+				<a href="javascript:;" class="button button--big sidebar__button do-close-filters">
+					Затвори
+				</a>
+
+				<div class="sidebar__content">
+					<header class="sidebar__content__header">
+						<h4 class="sidebar__content__title">
+							Производител
+						</h4>
+					</header>
+					<div class="sidebar__content__cnt">
+						<ul class="sidebar__content__list">
+							<li ng-repeat="producer in producers">
+								<label for="{{producer.ProducerId}}" class="checkbox">
+									<input type="checkbox" id="{{producer.ProducerId}}" ng-model="filter['ProducerId'][producer.ProducerId]" />
+									<span class="checkbox__input"></span>
+									<span class="checkbox__label">
+										{{producer.ProducerName}}
+									</span>
+								</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="sidebar__content">
+					<header class="sidebar__content__header">
+						<h4 class="sidebar__content__title">
+							Цена
+						</h4>
+					</header>
+					<div class="sidebar__content__cnt">
+						<rzslider
+						    rz-slider-model="0"
+						    rz-slider-high="max"
+						    rz-slider-options="options"
+					    ></rzslider>
+					</div>
+				</div>
+				<div class="sidebar__content">
+					<header class="sidebar__content__header">
+						<h4 class="sidebar__content__title">
+							Статус
+						</h4>
+					</header>
+					<div class="sidebar__content__cnt">
+						<ul class="sidebar__content__list">
+							<li ng-repeat="status in statuses">
+								<label for="{{status}}" class="checkbox">
+									<input type="checkbox" id="{{status}}" ng-model="filter['ProductStatus'][status]" />
+									<span class="checkbox__input"></span>
+									<span class="checkbox__label" ng-if="status == 'instock'">
+										В наличност
+									</span>
+									<span class="checkbox__label" ng-if="status == 'limit'">
+										Ограничен брой
+									</span>
+									<span class="checkbox__label" ng-if="status == 'out'">
+										Изчерпан
+									</span>
+								</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</aside>
+
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<ul class="product__top-bar">
+					<li ng-if="visited_products.length">
+						<a href="javascript:;" class="button button--big" ng-click="history()">
+							Разгледани продукти
+						</a>
+					</li>
+					<li>
+						<select ng-model="sortBy">
+							<option value="">
+								Сортирайте продуктите по:
+							</option>
+							<option value="ProductName">
+								По азбучен ред (възходящо)
+							</option>
+							<option value="-ProductName">
+								По азбучен ред (низходящо)
+							</option>
+							<option value="ProductPrice">
+								По цена (възходящо)
+							</option>
+							<option value="-ProductPrice">
+								По цена (низходящо)
+							</option>
+						</select>
+					</li>
+					<li class="product__view-change">
+						<ul>
+							<li data-change-view="grid" class="active">
+								Грид
+							</li>
+							<li data-change-view="row">
+								Редове
+							</li>
+						</ul>
+					</li>
+				</ul>
+
+				<div class="row row--product do-change-view" infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+					<div class="small-12 medium-6 large-3 columns row__column" ng-repeat="product in filtered=(products | filter:filterByProperties | filter:priceFilter('ProductPrice')) | orderBy:[sortBy,'-ProductId']">
+						<ng-include src="'http://ecommerce/partials/product.html'"></ng-include>
+					</div>
+				</div>
+		
+				<div class="notitification-placeholder" ng-if="products.length && !filtered.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 488.3 488.3">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_document"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма намерени продукти
+					</h2>
+					<p class="notitification-placeholder__message">
+						Няма намерени филтри с използваните от Вас филтри
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="notitification-placeholder" ng-if="!products.length">
+			<span class="notitification-placeholder__icon">
+				<svg viewBox="0 0 488.3 488.3">
+				   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_document"></use>
+				</svg>
+			</span>
+			<h2 class="notitification-placeholder__title">
+				Няма добавени продукти
+			</h2>
+			<p class="notitification-placeholder__message">
+				Към текущата категория не са добавени продукти
+			</p>
+		</div>
+	</div>
+</section>

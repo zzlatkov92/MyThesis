@@ -1,0 +1,56 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с клиенти
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<ng-include src="'http://ecommerce/partials/admin_sidebar.html'"></ng-include>
+			
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<form ng-if="users.length">
+					<ng-include src="'http://ecommerce/partials/admin_page_search.html'"></ng-include>
+
+					<table>
+						<thead>
+							<tr>
+								<th>
+									Име
+								</th>
+								<th>
+									Имейл
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in users | filter:searchFilter | orderBy:'-UserId'">
+								<td>
+									#{{user.UserId}} {{user.UserName}} {{user.UserLastName}}
+								</td>
+								<td data-thead="Имейл">
+									<a href="mailto:{{user.UserEmail}}">{{user.UserEmail}}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div class="notitification-placeholder" ng-if="!users.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 482.9 482.9">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_profile"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма регистрирани потребители
+					</h2>
+					<p class="notitification-placeholder__message">
+						До момента няма регистрирани потребители в магазина
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,107 @@
+<article class="popup popup--medium">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Вход
+		</h2>
+	</header>
+	<div class="popup__content">
+		<div class="row">
+			<div class="small-12 medium-6 columns">
+				<h4>
+					Данни за вход
+				</h4>
+
+				<form ng-controller="UserSigninController" autocomplete="off" name="loginForm">
+					<div class="form-notification form-notification--error" ng-if="msg != ''">
+                    	 {{msg}} 
+                    </div>
+
+					<ul>
+						<li class="input">
+							<label for="login_email" class="input__label">
+								И-мейл
+							</label>
+							<input type="email" class="input__field" value="" ng-model="user.mail" name="mail" id="login_email" required="required" />
+						</li>
+						<li class="form-notification form-notification--error" ng-if="loginForm.mail.$error.email">
+	                    	Въвели сте грешен имейл
+	                    </li>
+						<li class="input">
+							<label for="login_password" class="input__label">
+								Парола
+							</label>
+							<input type="password" class="input__field" value="" ng-model="user.pass" id="login_password" name="password" required="required" ng-minlength="6" />
+						</li>
+						<li class="form-notification form-notification--error" ng-if="loginForm.password.$error.minlength">
+	                    	Паролата трябва да съдържа поне 6 символа
+	                    </li>
+					</ul>
+
+					<p class="text-center">
+						<a href="javascript:;" 
+							data-open-popup="http://ecommerce/modules/users/views/forgot_password.html" 
+						>
+							Забравена парола
+						</a>
+					</p>
+
+					<button type="submit" class="button--big" ng-click="login(user)" ng-disabled="loginForm.$invalid">
+						Вход
+					</button>
+				</form>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<h4>
+					Данни за регистрация
+				</h4>
+
+				<form ng-controller="UserSignupController" autocomplete="off" name="registrationForm">
+					<div class="form-notification form-notification--error" ng-repeat="error in errors">
+                    	 {{error}} 
+                    </div>
+					<ul>
+						<li class="input">
+							<label for="register_name" class="input__label">
+								Име
+							</label>
+							<input type="text" class="input__field" value="" ng-model="register.name" id="register_name" required="required" />
+						</li>
+						<li class="input">
+							<label for="register_last_name" class="input__label">
+								Фамилия
+							</label>
+							<input type="text" class="input__field" value="" ng-model="register.last_name" id="register_last_name" required="required" />
+						</li>
+						<li class="input">
+							<label for="register_email" class="input__label">
+								И-мейл
+							</label>
+							<input type="email" class="input__field" value="" ng-model="register.email" name="mail" id="register_email" required="required" />
+						</li>
+						<li class="form-notification form-notification--error" ng-if="registrationForm.mail.$error.email">
+	                    	Въвели сте грешен имейл
+	                    </li>
+						<li class="input">
+							<label for="register_password" class="input__label">
+								Парола
+							</label>
+							<input type="password" class="input__field" value="" ng-model="register.password" id="register_password" name="password" required="required" ng-minlength="6" />
+						</li>
+						<li class="form-notification form-notification--error" ng-if="registrationForm.password.$error.minlength">
+	                    	Паролата трябва да съдържа поне 6 символа
+	                    </li>
+					</ul>
+
+					<button type="submit" class="button--big" ng-click="SignUp(register)" ng-disabled="registrationForm.$invalid">
+						Регистрирай
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</article>

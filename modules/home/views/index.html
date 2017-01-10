@@ -1,0 +1,58 @@
+<div class="homepage__slider" ng-if="promotions.length">
+	<div class="slider-gallery do-init-slider-gallery">
+		<div class="slider-gallery__slide" ng-repeat="promotion in promotions">
+			<a href="{{promotion.PromotionLink}}" target="_blank">
+				<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{promotion.PromotionName}}" 
+                    srcset="{{promotion.PromotionPhoto}}"
+                >
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="homepage__steps">
+	<div class="shell">
+		<div class="row homepage__steps__row">
+			<div class="small-6 medium-3 columns">
+				<h4>
+					Онлайн винаги ще бъде по-лесно
+				</h4>
+				<p>
+					Не губи време и нерви в градския трафик, за да обикаляш различни магазини! E-commerce ти предлага бързо, удобно и приятно пазаруване! Предлагаме ти електроника, малки и големи електроуреди, книги, всичко за бебето и много други!
+				</p>
+			</div>
+			<div class="small-6 medium-3 columns">
+				<h4>
+					Бърза доставка
+				</h4>
+				<p>
+					Знаем, че не обичаш да чакаш и че нямаш търпение да се насладиш и изпробваш продукта, който си поръчал. Затова ти предлагаме бърза доставка до вратата на твоя дом!
+				</p>
+			</div>
+			<div class="small-6 medium-3 columns">
+				<h4>
+					Проверка на пратката
+				</h4>
+				<p>
+					Знаеш какво си поръчал! При доставка на пратката поискай на куриера да го отвориш за да провериш, че продуктите за точно тези, които си поръчал! Купувайки от E-commerce имаш това право!
+				</p>
+			</div>
+			<div class="small-6 medium-3 columns">
+				<h4>
+					Плащаш при доставка
+				</h4>
+				<p>
+					Плащаш при доставка
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="homepage__products" ng-if="products.length">
+	<div class="shell slider-multiple do-init-slider-multiple-gallery">
+		<div ng-repeat="product in products" class="small-3 columns slider-gallery__slide">
+			<ng-include src="'http://ecommerce/partials/product.html'"></ng-include>
+		</div>
+	</div>
+</div>

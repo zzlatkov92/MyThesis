@@ -1,0 +1,40 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Информация
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<ng-include src="'http://ecommerce/partials/admin_sidebar.html'"></ng-include>
+
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<div>
+					<h4>
+						Статистика поръчки
+					</h4>
+
+					<canvas id="ordersChart" width="400" height="150"></canvas>
+				</div>
+
+				<div class="row">
+					<div class="small-12 medium-6 columns">
+						<h4>
+							Най - продавани продукти
+						</h4>
+
+						<canvas id="productsChart" width="500" height="300"></canvas>
+					</div>
+					<div class="small-12 medium-6 columns">
+						<h4>
+							Най - лоялни клиенти
+						</h4>
+
+						<canvas id="clientsChart" width="500" height="300"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

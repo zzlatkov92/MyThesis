@@ -1,0 +1,80 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с поръчки
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row" ng-if="orders.length">
+			<div class="small-12 medium-6 large-3 columns" ng-repeat="order in orders | orderBy:'-OrderDate'">
+				<article class="box">
+					<header class="box__header">
+						<span class="box__header__icon"></span>
+						<h2 class="box__title">
+							Поръчка #{{order.OrderId}}
+						</h2>
+						<span>
+							{{order.OrderDate}}
+						</span>
+					</header>
+					<div class="box__content">
+						<ul>
+							<li>
+								<span>
+									Статус
+								</span>
+								<p ng-if="order.OrderStatus == 'send'">
+									Изпратена
+								</p>
+								<p ng-if="order.OrderStatus == 'completed'">
+									Приключена
+								</p>
+								<p ng-if="order.OrderStatus == 'declined'">
+									Анулирана
+								</p>
+							</li>
+							<li>
+								<span>
+									Получател
+								</span>
+								{{order.DeliveryUser}}
+							</li>
+							<li>
+								<span>
+									Адрес
+								</span>
+								{{order.DeliveryAddress}}
+							</li>
+							<li>
+								<span>
+									Общо
+								</span>
+								{{order.TotalPrice | currency:"BGN "}}
+							</li>
+						</ul>
+					</div>
+					<footer class="box__footer">
+						<a href="javascript:;" class="button button--big" ng-click="orderDetails(order.OrderId)">
+							Детайли
+						</a>
+					</footer>
+				</article>
+			</div>
+		</div>
+
+		<div class="notitification-placeholder" ng-if="!orders.length">
+			<span class="notitification-placeholder__icon">
+				<svg viewBox="0 0 490.1 490.1">
+				   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_organization"></use>
+				</svg>
+			</span>
+			<h2 class="notitification-placeholder__title">
+				Нямате направени поръчки
+			</h2>
+			<p class="notitification-placeholder__message">
+				Не сте извършили никакви поръчки, до този момент
+			</p>
+		</div>
+	</div>
+</section>

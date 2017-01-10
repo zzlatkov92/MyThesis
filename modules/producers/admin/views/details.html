@@ -1,0 +1,42 @@
+<article class="popup" ng-controller="AdminProducersDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2 ng-if="producer.ProducerId != null">
+			Редактирай производител #{{producer.ProducerId}}
+		</h2>
+
+		<h2 ng-if="producer.ProducerId == null">
+			Добави производител
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form autocomplete="off" name="editProducer">
+			<input type="hidden" value="" ng-model="producer.ProducerId" />
+
+			<ul>
+				<li class="input">
+					<label for="producer_name" class="input__label">
+						Име
+					</label>
+					<input type="text" class="input__field" value="" ng-model="producer.ProducerName" id="producer_name" required="required" />
+				</li>
+			</ul>
+
+			<button type="submit" class="button--big" ng-click="saveProducer(producer)"
+					ng-if="producer.ProducerId != null" ng-disabled="editProducer.$invalid"
+			>
+				Редактирай
+			</button>
+
+			<button type="submit" class="button--big" ng-click="saveProducer(producer)"
+					ng-if="producer.ProducerId == null" ng-disabled="editProducer.$invalid"
+			>
+				Добави
+			</button>
+		</form>
+	</div>
+</article>

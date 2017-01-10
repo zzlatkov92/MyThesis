@@ -1,0 +1,6 @@
+.dropbox {
+	border: 3px dashed $color-gray-4;
+	text-align: center;
+	cursor: pointer;
+	@include generate-spacing(padding,2);
+}

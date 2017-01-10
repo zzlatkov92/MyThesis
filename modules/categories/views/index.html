@@ -1,0 +1,29 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с категории
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row--main">
+			<div class="row row--product">
+				<div class="small-12 medium-6 large-3 columns row__column" ng-repeat="category in categories">
+					<article class="product box">
+						<div class="product__content">
+							<h4 class="product__title box__title">
+								<a href="/products/{{category.CategoryLink}}">
+									{{category.CategoryName}}
+								</a>
+							</h4>
+
+							<a href="/products/{{category.CategoryLink}}" class="button button--big product__button">
+								Детайли
+							</a>
+						</div>
+					</article>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

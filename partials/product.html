@@ -1,0 +1,28 @@
+<article class="product">
+	<a href="/products/details/{{product.ProductLink}}" class="product__photo">
+		<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{product.ProductName}}" 
+			srcset="{{product.ProductPhoto}}"
+		>
+	</a>
+
+	<div class="product__content">
+		<h4 class="product__title">
+			<a href="/products/details/{{product.ProductLink}}">
+				{{product.ProductName | limitTo: 30}}
+			</a>
+		</h4>
+
+		<ul class="product__price">
+			<li class="product__price__old" ng-if="product.ProductOldPrice != ''">
+				{{product.ProductOldPrice | currency:"BGN "}}
+			</li>
+			<li>
+				{{product.ProductPrice | currency:"BGN "}}
+			</li>
+		</ul>
+
+		<a href="/products/details/{{product.ProductLink}}" class="button button--big product__button">
+			Детайли
+		</a>
+	</div>
+</article>

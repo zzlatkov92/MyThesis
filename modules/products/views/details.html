@@ -1,0 +1,180 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			{{product.ProductName}}
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<div class="small-12 medium-8 columns">
+				<div class="slider-gallery do-init-slider-gallery">
+					<div class="slider-gallery__slide" ng-repeat="photo in product.Photos">
+						<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{product.ProductName}}" 
+		                    srcset="{{photo.PhotoSrc}}"
+		                >
+					</div>
+				</div>
+			</div>
+
+			<div class="small-12 medium-4 columns">
+				<ul class="product-details__info">
+					<li>
+						<span>
+							Коментари
+						</span>
+						{{totalComments}}
+					</li>
+					<li ng-if="product.ProductStatus == 'instock'">
+						<span>
+							Статус
+						</span>
+						В наличност
+					</li>
+					<li ng-if="product.ProductStatus == 'limit'">
+						<span>
+							Статус
+						</span>
+						Ограничен брой
+					</li>
+					<li ng-if="product.ProductStatus == 'out'">
+						<span>
+							Статус
+						</span>
+						Изчерпан
+					</li>
+					<li ng-if="product.ProductSizing">
+						<select ng-model="product.ProductSize">
+							<option value="">
+								Избери размер
+							</option>
+							<option value="XS">
+								XS
+							</option>
+							<option value="S">
+								S
+							</option>
+							<option value="M">
+								M
+							</option>
+							<option value="L">
+								L
+							</option>
+							<option value="XL">
+								XL
+							</option>
+						</select>
+					</li>
+				</ul>
+				<ul class="product-details__price">
+					<li class="product-details__price__old" ng-if="product.ProductOldPrice != ''">
+						{{product.ProductOldPrice | currency:"BGN " }}
+					</li>
+					<li>
+						{{product.ProductPrice | currency:"BGN " }}
+					</li>
+				</ul>
+
+				<ul class="product-details__buttons">
+					<li ng-if="product.ProductStatus != 'out'">
+						<ngcart-addtocart id="{{ product.ProductId }}" name="{{ product.ProductName }}" price="{{ product.ProductPrice }}" quantity="1" quantity-max="{{product.ProductQty}}" 
+						data="product"></ngcart-addtocart>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="button button--big button--secondary" ng-if="userIsLogged" ng-click="favoriteProduct(product.ProductId)">
+							Добави в любими
+						</a>
+
+						<div class="form-notification form-notification--error" ng-if="favorite_msg != ''">
+			            	{{favorite_msg}}
+			            </div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="product-details__section product-details__section--description" ng-if="product.ProductOverview != ''">
+			<h4>
+				Описание
+			</h4>
+
+			<div ng-bind-html="ProductOverview"></div>
+		</div>
+
+		<div class="product-details__section product-details__section--characteristics" ng-if="product.ProductFeatures != ''">
+			<h4>
+				Характеристики
+			</h4>
+
+			<div ng-bind-html="ProductFeatures"></div>
+		</div>
+
+		<div class="product-details__section product-details__section--comments">
+			<h4>
+				Коментари
+			</h4>
+
+			<form ng-if="userIsLogged" class="do-clear-form" name="addReview">
+				<ul class="row">
+					<li class="small-12 medium-6 columns">
+						<div class="input">
+							<label for="product_details_comment_user_name" class="input__label">
+								Име
+							</label>
+							<input type="text" class="input__field" value="" ng-model="product.commentUserName" id="product_details_comment_user_name" required="required" />
+						</div>
+					</li>
+					<li class="small-12 medium-6 columns">
+						<div class="input">
+							<label for="product_details_comment_user_last_name" class="input__label">
+								Фамилия
+							</label>
+							<input type="text" class="input__field" value="" ng-model="product.commentUserLastName" id="product_details_comment_user_last_name" required="required" />
+						</div>
+					</li>
+					<li class="small-12 medium-12 columns">
+						<div class="input">
+							<label for="product_details_comment" class="input__label">
+								Коментар
+							</label>
+							<textarea class="input__field" value="" ng-model="product.commentCtx" id="product_details_comment" required="required"></textarea>
+						</div>
+					</li>
+				</ul>
+
+				<button type="submit" ng-disabled="addReview.$invalid" ng-click="addComment(product.ProductId, product.commentCtx, product.commentUserName, product.commentUserLastName)">
+					Добави коментар
+				</button>
+			</form>
+
+			<div class="notitification-placeholder" ng-if="!userIsLogged">
+				<span class="notitification-placeholder__icon">
+					<svg viewBox="0 0 612 612">
+					   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_comment"></use>
+					</svg>
+				</span>
+				<p class="notitification-placeholder__message">
+					За да добавите коментар, тряба да имате регистрация
+				</p>
+			</div>
+
+			<ul ng-if="product.Comments.length" class="comments">
+				<li class="media-object comment" ng-repeat="comment in product.Comments">
+					<div class="media-object-section comment__thumbnail">
+						<svg viewBox="0 0 612 612">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_comment"></use>
+						</svg>
+					</div>
+					<div class="media-object-section">
+						<h4 class="comment__owner">
+							{{comment.ReviewUserName}} {{comment.ReviewUserLastName}}
+						</h4>
+						<p>
+							{{comment.ReviewContent}}
+						</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>

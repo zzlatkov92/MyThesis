@@ -1,0 +1,102 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с продукти
+		</h1>
+
+		<a href="javascript:;" class="button page__button" ng-click="AddProduct()" ng-if="categories.length && producers.length">
+			Добави продукт
+		</a>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<ng-include src="'http://ecommerce/partials/admin_sidebar.html'"></ng-include>
+
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<form class="sidebar-neighbor medium-12 large-9 columns" ng-if="products.length">
+					<ng-include src="'http://ecommerce/partials/admin_page_search.html'"></ng-include>
+
+					<table>
+						<thead>
+							<tr>
+								<th>
+									Име
+								</th>
+								<th>
+									Цена
+								</th>
+								<th>
+									Статус
+								</th>
+								<th>
+									Количество
+								</th>
+								<th>
+									Опции
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="product in products | filter:searchFilter | orderBy:'-ProductId'">
+								<td>
+									<a href="javascript:;">{{product.ProductName}}</a>
+								</td>
+								<td data-thead="Цена">
+									{{product.ProductPrice| currency:"BGN "}}
+								</td>
+								<td data-thead="Статус" ng-if="product.ProductStatus == 'instock'">
+									В наличност
+								</td>
+								<td data-thead="Статус" ng-if="product.ProductStatus == 'limit'">
+									Ограничен брой
+								</td>
+								<td data-thead="Статус" ng-if="product.ProductStatus == 'out'">
+									Изчерпан
+								</td>
+								<td data-thead="Количество">
+									{{product.ProductQty}}
+								</td>
+								<td class="small">
+									<ul class="row">
+										<li class="small-6 columns">
+											<a href="javascript:;" class="button button--big button--icon" ng-click="EditProduct(product.ProductId)">
+												<svg viewBox="0 0 486.4 486.4">
+				                                   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_edit"></use>
+				                                </svg>
+											</a>
+										</li>
+										<li class="small-6 columns">
+											<a href="javascript:;" class="button button--big button--icon" ng-click="DeleteProduct(product.ProductId)">
+												<svg viewBox="0 0 486.4 486.4">
+				                                   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_remove"></use>
+				                                </svg>
+											</a>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div class="notitification-placeholder"  ng-if="!products.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 488.3 488.3">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_document"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма добавени продукти
+					</h2>
+					<p class="notitification-placeholder__message">
+						До момента няма добавени продукти в сайта. За да добавите такъв, е нужно да бъде добавена поне една категория и един производител
+					</p>
+					<a href="javascript:;" class="button notitification-placeholder__button" ng-click="AddProduct()" ng-if="categories.length && producers.length">
+						Добави продукт
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

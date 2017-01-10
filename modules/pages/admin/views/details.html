@@ -1,0 +1,48 @@
+<article class="popup popup--medium" ng-controller="AdminPagesDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2 ng-if="page.PageId != null">
+			Редактирай страница #{{page.PageId}}
+		</h2>
+
+		<h2 ng-if="page.PageId == null">
+			Добави страница
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form autocomplete="off" name="editPage">
+			<input type="hidden" value="" ng-model="page.PageId" />
+
+			<ul>
+				<li class="input">
+					<label for="page_name" class="input__label">
+						Име
+					</label>
+					<input type="text" class="input__field" value="" ng-model="page.PageName" id="page_name" required="required" />
+				</li>
+				<li class="input">
+					<label for="page_context" class="input__label">
+						Съдържание
+					</label>
+					<text-angular ng-model="page.PageContent" required="required"></text-angular>
+				</li>
+			</ul>
+
+			<button type="submit" class="button--big" ng-click="savePage(page)"
+					ng-if="page.PageId != null" ng-disabled="sendRequest.$invalid"
+			>
+				Редактирай
+			</button>
+
+			<button type="submit" class="button--big" ng-click="savePage(page)"
+					ng-if="page.PageId == null" ng-disabled="sendRequest.$invalid"
+			>
+				Добави
+			</button>
+		</form>
+	</div>
+</article>

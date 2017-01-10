@@ -1,0 +1,73 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с запитвания
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<ng-include src="'http://ecommerce/partials/admin_sidebar.html'"></ng-include>
+			
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<form class="sidebar-neighbor medium-12 large-9 columns" ng-if="contacts.length">
+					<ng-include src="'http://ecommerce/partials/admin_page_search.html'"></ng-include>
+
+					<table>
+						<thead>
+							<tr>
+								<th>
+									Заглавие
+								</th>
+								<th>
+									Изпратил
+								</th>
+								<th>
+									Съдържание
+								</th>
+								<th>
+									Отговор
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="contact in contacts | filter:searchFilter | orderBy:'-ContactId'">
+								<td>
+									#{{contact.ContactId}} {{contact.ContactTitle}}
+								</td>
+								<td data-thead="Изпратил">
+									{{contact.ContactSender}}
+								</td>
+								<td data-thead="Съдръжание">
+									{{contact.ContactContext}}
+								</td>
+								<td ng-if="contact.ContactAnswer == null">
+									<a href="javascript:;" ng-click="sendAnswer(contact.ContactId)" class="button button--big">
+										Изпрати отговор
+									</a>
+								</td>
+								<td ng-if="contact.ContactAnswer != null">
+									Изпратен
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div class="notitification-placeholder" ng-if="!contacts.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 32.666 32.666">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_contact"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма добавени запитвания
+					</h2>
+					<p class="notitification-placeholder__message">
+						До момента не е получено нито едно запитване
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,45 @@
+<article class="popup">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Моят профил
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form ng-controller="UserProfileController" name="editProfile">
+			<ul>
+				<li class="input">
+					<label for="profile_name" class="input__label">
+						Име
+					</label>
+					<input type="text" class="input__field" value="" ng-model="profile.UserName" id="profile_name" />
+				</li>
+				<li class="input">
+					<label for="profile_last_name" class="input__label">
+						Фамилия
+					</label>
+					<input type="text" class="input__field"  value="" ng-model="profile.UserLastName" id="profile_last_name" />
+				</li>
+				<li class="input">
+					<label for="profile_email" class="input__label">
+						И-мейл
+					</label>
+					<input type="email" class="input__field"  value="" ng-model="profile.UserEmail" name="mail" id="profile_email" />
+				</li>
+				<li class="form-notification form-notification--error" ng-if="editProfile.mail.$error.email">
+                	Въвели сте грешен имейл
+                </li>
+			</ul>
+
+			<footer class="popup__footer">
+				<button type="submit" class="button--big" ng-click="saveProfile(profile)" ng-disabled="editProfile.$invalid">
+					Запази
+				</button>
+			</footer>
+		</form>
+	</div>
+</article>

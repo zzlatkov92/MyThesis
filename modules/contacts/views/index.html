@@ -1,0 +1,51 @@
+<article class="popup">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Изпрати запитване
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form ng-controller="SendContactsController" autocomplete="off" name="sendRequest">
+			<ul>
+				<li class="input">
+					<label for="contact_title" class="input__label">
+						Въпрос
+					</label>
+					<input type="text" class="input__field" value="" ng-model="contact.ContactTitle" id="contact_title" required="required" />
+				</li>
+				<li class="input">
+					<label for="contact_sender" class="input__label">
+						От
+					</label>
+					<input type="text" class="input__field"  value="" ng-model="contact.ContactSender" id="contact_sender" required="required" />
+				</li>
+				<li class="input">
+					<label for="contact_email" class="input__label">
+						И-мейл
+					</label>
+					<input type="email" class="input__field"  value="" ng-model="contact.ContactMail" name="mail" id="contact_email" required="required" />
+				</li>
+				<li class="form-notification form-notification--error" ng-if="sendRequest.mail.$error.email">
+                	Въвели сте грешен имейл
+                </li>
+				<li class="input">
+					<label for="contact_context" class="input__label">
+						Съдържание
+					</label>
+					<textarea class="input__field"  value="" ng-model="contact.ContactContext" id="contact_context" required="required"></textarea>
+				</li>
+			</ul>
+
+			<footer class="popup__footer">
+				<button type="submit" class="button--big" ng-click="sendContact(contact)" ng-disabled="sendRequest.$invalid">
+					Изпрати
+				</button>
+			</footer>
+		</form>
+	</div>
+</article>

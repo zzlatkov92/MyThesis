@@ -1,0 +1,288 @@
+<article class="popup popup--medium" ng-controller="AdminProductsDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2 ng-if="product.ProductId != null">
+			Редактирай продукт #{{product.ProductId}}
+		</h2>
+
+		<h2 ng-if="product.ProductId == null">
+			Добави продукт
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form autocomplete="off" name="editProduct">
+			<input type="hidden" value="" ng-model="product.ProductId" />
+
+            <ul class="tabs">
+            	<li class="tabs__tab active" data-tab="product_overall_info">
+            		<a href="javascript:;">
+            			Обща информация
+            		</a>
+            	</li>
+            	<li class="tabs__tab" data-tab="product_more_info">
+            		<a href="javascript:;">
+            			Още информация
+            		</a>
+            	</li>
+            	<li class="tabs__tab" data-tab="product_gallery">
+            		<a href="javascript:;">
+            			Галерия
+            		</a>
+            	</li>
+            </ul>
+
+            <div class="tabs-content active" data-tab-section="product_overall_info">
+				<ul>
+					<li class="input">
+						<label for="product_name" class="input__label">
+							Име
+						</label>
+						<input type="text" class="input__field" value="" ng-model="product.ProductName" id="product_name" required="required"  />
+					</li>
+					<li class="input">
+						<label for="product_qty" class="input__label">
+							Брой
+						</label>
+						<div class="spinner do-spinner">
+							<span class="spinner__ctrl spinner__ctrl--down do-spinner-decrease" ng-click="decreaseSpinner(product)">
+								<span>
+									-
+								</span>
+							</span>
+							<span class="spinner__input">
+								<input type="text" value="" id="product_qty" ng-model="product.ProductQty" name="qty" required="required" ng-pattern="/^[0-9]+$/"  />
+							</span>
+							<span class="spinner__ctrl spinner__ctrl--down do-spinner-increase" ng-click="increaseSpinner(product)">
+								<span>
+									+
+								</span>
+							</span>
+						</div>
+					</li>
+					<li class="form-notification form-notification--error" ng-if="editProduct.qty.$error.pattern">
+	                	Полето може да съдържа само цифри без празно място
+	                </li>
+					<li>
+						<ul class="row">
+							<li class="small-6 columns">
+								<div class="input">
+									<label for="product_price" class="input__label">
+										Стара цена
+									</label>
+									<input type="text" class="input__field" value="" ng-model="product.ProductOldPrice" id="product_price" name="old_price" ng-disabled="product.ProductId == null" ng-pattern="/^[0-9]+$/" />
+								</div>
+								<div class="form-notification form-notification--error" ng-if="editProduct.old_price.$error.pattern">
+				                	Полето може да съдържа само цифри без празно място
+				                </div>
+							</li>
+							<li class="small-6 columns">
+								<div class="input">
+									<label for="product_price" class="input__label">
+										Цена
+									</label>
+									<input type="text" class="input__field" value="" ng-model="product.ProductPrice" name="price" id="product_price" required="required" ng-pattern="/^[0-9]+$/" />
+									<div class="form-notification form-notification--error" ng-if="editProduct.price.$error.pattern">
+					                	Полето може да съдържа само цифри без празно място
+					                </div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li class="input">
+						<label for="product_name" class="input__label">
+							Категория
+						</label>
+						<select ng-model="product.CategoryId" required="required" >
+							<option value="">
+								Избери категория
+							</option>
+							<option ng-repeat="category in categories" value="{{category.CategoryId}}" ng-selected="product.CategoryId == category.CategoryId">
+								{{category.CategoryName}}
+							</option>
+						</select>
+					</li>
+					<li class="input">
+						<label for="product_name" class="input__label">
+							Производител
+						</label>
+						<select ng-model="product.ProducerId" required="required" >
+							<option value="">
+								Избери производител
+							</option>
+							<option ng-repeat="producer in producers" value="{{producer.ProducerId}}" ng-selected="product.ProducerId == producer.ProducerId">
+								{{producer.ProducerName}}
+							</option>
+						</select>
+					</li>
+					<li class="input">
+						<label for="product_name" class="input__label">
+							Снимка
+						</label>
+
+	             		<div ngf-drop 
+	             			ngf-select 
+	             			ng-model="product.ProductPhoto" 
+	             			name="file" 
+	             			class="dropbox" 
+					        ngf-drag-over-class="'dragover'" 
+					        accept="image/*" 
+					        ngf-pattern="'image/*'"
+					        ngf-min-width="300"
+				        	ngf-min-height="170"
+				        	ngf-max-size="10MB"
+				        	ngf-resize="{width: 300, height: 170}"
+				        	ng-required="product.ProductPhoto == null"
+	        			>
+	        				Плъзни файла тук или избери от компютър
+	        			</div>
+
+	             		<ul class="thumbnails" ng-show="product.ProductPhoto">
+	             			<li class="thumbnails__thumbnail">
+	             				<a href="{{product.ProductPhoto | ngfDataUrl}}" target="_blank">
+	             					<img class="thumbnails__thumbnail__image" 
+	             						ngf-src="product.ProductPhoto" alt="" 
+	         						/> 
+	             				</a>
+			             		<button class="thumbnails__thumbnail__button" ng-click="product.ProductPhoto = null">
+			             			Премахни
+			             		</button>
+	             			</li>
+	             		</ul>
+
+	             		<div class="form-notification form-notification--error" ng-if="editProduct.file.$error.maxSize">
+			            	Корицата неможе да е по - голяма от 10MB
+			            </div>
+
+			            <div class="form-notification form-notification--error" ng-if="editProduct.file.$error.minWidth">
+			            	Корицата неможе да е по - тясна от 300px
+			            </div>
+
+			            <div class="form-notification form-notification--error" ng-if="editProduct.file.$error.minHeight">
+			            	Корицата неможе да е по - ниска от 170px
+			            </div>
+					</li>
+					<li class="input">
+						<label class="input__label">
+							Описание
+						</label>
+						<text-angular ng-model="product.ProductOverview"></text-angular>
+					</li>
+				</ul>
+			</div>
+
+			<div class="tabs-content" data-tab-section="product_more_info">
+				<div class="input">
+					<label for="product_char" class="input__label">
+						Характеристики
+					</label>
+					<text-angular ng-model="product.ProductFeatures"></text-angular>
+				</div>
+
+				<div class="form-notification form-notification--info">
+	            	Кодът за добавяне на характеристики е: <br/>
+
+	            	"&lt;ul&gt;
+						&lt;li&gt;
+							&lt;div&gt;
+								&lt;span&gt;
+									Име на характеристика
+								&lt;/span&gt;
+								&lt;p&gt;
+									Стойност на характеристика
+								&lt;/p&gt;
+							&lt;/div&gt;
+						&lt;/li&gt;
+					&lt;/ul&gt;"
+
+					Ако искате да добавите повече от една характеристика, просто разкопирвате &lt;li&gt;
+	            </div>
+
+				<div class="input">
+					<label for="ProductSizing" class="checkbox">
+						<input type="checkbox" id="ProductSizing" ng-model="product.ProductSizing" />
+						<span class="checkbox__input"></span>
+						<span class="checkbox__label">
+							Добавяне на размери към продукта
+						</span>
+					</label>
+				</div>
+
+				<div class="form-notification form-notification--info">
+	            	При селектиране на опцията в детайлите на продуктите, ще се показва падащо меню с размери на продукта.
+	            </div>
+			</div>
+
+			<div class="tabs-content" data-tab-section="product_gallery">
+				<div ngf-drop ngf-select 
+         			ng-model="product.Gallery" 
+         			name="files" class="dropbox" 
+			        ngf-drag-over-class="'dragover'" 
+			        ngf-multiple="true" 
+			        gf-allow-dir="true"
+			        accept="image/*" 
+			        ngf-max-size="10MB"
+			        ngf-pattern="'image/*'"
+			        ngf-min-width="600"
+		        	ngf-min-height="340"
+		        	ngf-resize="{width: 600, height: 340}"
+    			>
+    				Плъзни файла тук или избери от компютър
+    			</div>
+
+    			<ul class="thumbnails">
+         			<li class="thumbnails__thumbnail" ng-repeat="photo in product.Gallery" ng-show="photo">
+         				<a href="{{photo | ngfDataUrl}}" target="_blank">
+         					<img class="thumbnails__thumbnail__image" 
+         						ngf-src="photo" alt="" 
+     						/> 
+         				</a>
+	             		<button class="thumbnails__thumbnail__button" ng-click="photo = null">
+	             			Премахни
+	             		</button>
+         			</li>
+         		</ul>
+
+         		<ul class="thumbnails" ng-show="product.Photos && !product.Gallery">
+         			<li class="thumbnails__thumbnail" ng-repeat="photo in product.Photos" ng-show="photo">
+         				<a href="{{photo.PhotoSrc | ngfDataUrl}}" target="_blank">
+         					<img class="thumbnails__thumbnail__image" 
+         						ngf-src="photo.PhotoSrc" alt="" 
+     						/> 
+         				</a>
+	             		<button class="thumbnails__thumbnail__button" ng-click="photo = null">
+	             			Премахни
+	             		</button>
+         			</li>
+         		</ul>
+
+         		<div class="form-notification form-notification--error" ng-if="editProduct.files.$error.maxSize">
+	            	Корицата неможе да е по - голяма от 10MB
+	            </div>
+
+	            <div class="form-notification form-notification--error" ng-if="editProduct.files.$error.minWidth">
+	            	Корицата неможе да е по - тясна от 600px
+	            </div>
+
+	            <div class="form-notification form-notification--error" ng-if="editProduct.files.$error.minHeight">
+	            	Корицата неможе да е по - ниска от 340px
+	            </div>
+			</div>
+
+			<button type="submit" class="button--big" ng-click="saveProduct(product)"
+					ng-if="product.ProductId != null" ng-disabled="editProduct.$invalid"
+			>
+				Редактирай
+			</button>
+
+			<button type="submit" class="button--big" ng-click="saveProduct(product)"
+					ng-if="product.ProductId == null" ng-disabled="editProduct.$invalid"
+			>
+				Добави
+			</button>
+		</form>
+	</div>
+</article>

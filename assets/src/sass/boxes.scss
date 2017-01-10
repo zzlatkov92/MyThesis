@@ -1,0 +1,51 @@
+.box {
+	border: 1px solid $color-gray-4;
+	border-radius: 4px;
+}
+
+.box__header {
+	border-bottom: 1px solid $color-gray-4;
+	@include generate-spacing(padding,2);
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+.box__title {
+	color: $color-gray-2;
+	padding: 0;
+}
+
+.box__header__icon {
+	float: right;
+	width: 35px;
+	height: 35px;
+}
+
+.box__content {
+	@include generate-spacing(padding,4,top);
+	@include generate-spacing(padding,4,bottom);
+	@include generate-spacing(padding,2,left);
+	@include generate-spacing(padding,2,right);
+	ul {
+		li {
+			color: $color-gray-3;
+			@include generate-font(1);
+			@include generate-spacing(padding,2,bottom);
+			&:last-of-type {
+				padding: 0;
+			}
+			span {
+				color: $color-gray-5;
+				display: block;
+				@include generate-font(0);
+			}
+		}
+	}
+}
+
+.box__footer {
+	@include generate-spacing(padding,2);
+}

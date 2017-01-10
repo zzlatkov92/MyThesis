@@ -1,0 +1,295 @@
+@-webkit-keyframes ngdialog-fadeout {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes ngdialog-fadeout {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes ngdialog-fadein {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes ngdialog-fadein {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.ngdialog {
+	background: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	z-index: 10000;
+}
+
+.ngdialog-overlay {
+	position: fixed;
+	background: rgba(0, 0, 0, 0.4);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	-webkit-backface-visibility: hidden;
+	animation: ngdialog-fadein 0.5s;
+}
+
+.ngdialog.ngdialog-closing .ngdialog-overlay {
+	-webkit-backface-visibility: hidden;
+	-webkit-animation: ngdialog-fadeout 0.5s;
+	animation: ngdialog-fadeout 0.5s;
+}
+
+
+.ngdialog.ngdialog-closing .ngdialog-content {
+	-webkit-backface-visibility: hidden;
+	-webkit-animation: ngdialog-fadeout 0.5s;
+	animation: ngdialog-fadeout 0.5s;
+}
+
+.ngdialog-close {
+	display: none;
+}
+
+body.ngdialog-open {
+	overflow: hidden;
+	padding: 0 !important;
+}
+
+.popup {
+	background: white;
+	border-radius: 4px;
+	position: relative;
+	margin: 0 auto;
+	animation: ngdialog-fadein 0.5s;
+	max-width: 320px;
+	&.popup--medium {
+		max-width: 700px;
+	}
+	&.popup--large {
+		max-width: 1024px;
+	}
+	.popup__header {
+		border-bottom: 1px solid $color-gray-8;
+		@include generate-spacing(padding,2,top);
+		@include generate-spacing(padding,2,bottom);
+		@include generate-spacing(padding,4,left);
+		@include generate-spacing(padding,4,right);
+		h2 {
+			padding: 0;
+		}
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+	}
+	.popup__content {
+		@include generate-spacing(padding,4);
+	}
+	.popup__close {
+		float: right;
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+		@include generate-spacing(margin,2,left);
+		svg {
+			fill: $color-gray-2;
+			width: 35px;
+			height: 35px;
+		}
+	}
+}
+
+.popup--contacts {
+	.list-label {
+		color: $color-gray-2;
+		@include generate-spacing(margin,2,bottom);
+		span {
+			color: $color-gray-6;
+			display: block;
+			@include generate-font(0); 
+		}
+	}
+}
+
+.popup--favorite-products {
+	ul {
+		@include generate-spacing(padding,2,bottom);
+		&:last-of-type {
+			padding: 0;
+		}
+		li {
+			display: inline-block;
+			@include generate-spacing(padding,2,right);
+			&.strike {
+				color: $color-gray-5;
+				position: relative;
+				&:before {
+					content: '';
+					background: $color-gray-5;
+					display: block;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate3d(-50%,-50%,0);
+					width: 110%;
+					height: 1px;
+				}
+			}
+		}
+	}
+}
+
+.popup--order-details {
+	.order__info {
+		li {
+			color: $color-gray-2;
+			@include generate-font(1);
+			@include generate-spacing(padding,2,bottom);
+			span {
+				color: $color-gray-4;
+				display: block;
+				padding: 0;
+			}
+		}
+	}
+}
+
+.popup--order-purchase {
+	.tabs-content {
+		background: none;
+		border: 0;
+	}
+	.icon-remove--basket {
+		float: left;
+		@include generate-spacing(margin,2,right);
+	}
+	.basket__footer {
+		@include generate-spacing(padding,2,top);
+		.basket__footer__terms {
+			@include generate-spacing(padding,2,bottom);
+			.checkbox,
+			.checkbox__input,
+			a {
+				display: inline-block;
+			}
+			.checkbox__input {
+				float: none;
+				vertical-align: middle;
+			}
+		}
+	}
+	.basket__bill {
+		border: 1px solid $color-gray-4;
+		border-radius: 4px;
+		li {
+			text-align: right;
+			border-bottom: 1px solid $color-gray-4;
+			position: relative;
+			padding-left: 45%;
+			@include generate-spacing(padding,2,top);
+			@include generate-spacing(padding,2,right);
+			@include generate-spacing(padding,2,bottom);
+			&:last-of-type {
+				text-align: left;
+				border: 0;
+				border-radius: 0 0 4px 4px;
+				margin: 0;
+				@include generate-spacing(padding,2,left);
+			}
+			span {
+				color: $color-gray-4;
+				text-align: left;
+				position: absolute;
+				top: 50%;
+				left: 0;
+				width: 45%;
+				transform: translate3d(0,-50%,0);
+				@include generate-spacing(padding,2,left);
+			}
+		}
+	}
+	.basket__form {
+		border: 1px solid $color-gray-4;
+		border-radius: 4px;
+		@include generate-spacing(padding,2);
+		.basket__form__navigation {
+			background: $color-gray-8;
+			border-radius: 4px;
+			display: flex;
+			@include generate-spacing(margin,4,bottom);
+			li {
+				display: flex;
+				flex: 1 0;
+				&.active {
+					background: $color-gray-4;
+					a {
+						color: $color-gray-8;
+					}
+				}
+				&:first-of-type {
+					border-radius: 4px 0 0 4px;
+				}
+				&:last-of-type {
+					border-radius: 0 4px 4px 0;
+				}
+				a {
+					color: $color-gray-2;
+					text-align: center;
+					display: block;
+					width: 100%;
+					@include generate-spacing(padding,4);
+				}
+			}
+		}
+		.basket__form__section {
+			display: none;
+			&:first-of-type {
+				display: block;
+			}
+		}
+		.basket__options {
+			@include generate-spacing(padding,2,bottom);
+			&.basket__options--hidden {
+				display: none;
+			}
+			&:after {
+				content: '';
+				display: table;
+				clear: both;
+			}
+			> li {
+				float: left;
+				width: 50%;
+			}
+		}
+	}
+}

@@ -1,0 +1,67 @@
+.notitification-placeholder {
+	text-align: center;
+	width: 100%;
+	max-width: 320px;
+	margin: 0 auto;
+	@include generate-spacing(padding,2);
+	.notitification-placeholder__icon {
+		width: 80px;
+		height: 80px;
+		display: block;
+		margin: 0 auto;
+		@include generate-spacing(margin,2,bottom);
+		svg {
+			fill: $color-gray-2;
+			width: 80px;
+			height: 80px;
+		}
+	}
+	.notitification-placeholder__title {
+		color: $color-gray-2;
+	}
+	.notitification-placeholder__message {
+		color: $color-gray-4;
+	}
+	.notitification-placeholder__button {
+		display: inline-block;
+		@include generate-spacing(margin,2,top);
+	}
+}
+
+.form-notification {
+	color: $color-gray-4;
+	background: $color-gray-9;
+	border: 1px solid $color-gray-4;
+	@include generate-font(1);
+	@include generate-spacing(padding,2);
+	@include generate-spacing(margin,2,bottom);
+}
+
+.form-notification--success {
+	color: rgb(5,195,0);
+	background: rgb(195,255,195);
+	border-color: rgb(5,195,0);
+}
+
+.form-notification--info {
+	color: rgb(0,110,200);
+	background: rgb(200,240,255);
+	border-color: rgb(0,110,200);
+}
+
+.form-notification--alert {
+	color: rgb(255,199,0);
+	background: rgb(255,242,196);
+	border-color: rgb(255,199,0);
+}
+
+.form-notification--error {
+	color: rgb(220,0,0);
+	background: rgb(255,194,194);
+	border-color: rgb(220,0,0);
+}
+
+.form-notification--bottom {
+	margin: 0;
+	@include generate-spacing(margin,2,top);
+}

@@ -1,0 +1,39 @@
+body,
+html {
+	background: white;
+	font-family: 'open_sans_regular', Arial, sans-serif;
+	position: relative;
+    height: 100%;
+	@include generate-font(1);
+}
+
+.main-holder {
+	position: relative;
+	min-height: 100%;
+	padding-bottom: 50px;
+	overflow-x: hidden;
+	@media screen and (max-width: 1024px) {
+		padding-bottom: 100px;
+	}
+}
+
+main {
+	flex: 1;
+}
+
+ng-include {
+	width: 100%;
+}
+
+.row {
+	max-width: 100vw;
+	@include generate-spacing(margin,2,left,true);
+	@include generate-spacing(margin,2,right,true);
+	.columns {
+		@include generate-spacing(padding,2,left);
+		@include generate-spacing(padding,2,right);
+		&:last-of-type {
+			float: left;
+		}
+	}
+}

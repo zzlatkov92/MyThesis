@@ -1,0 +1,413 @@
+<article class="popup popup--large popup--order-purchase" ng-controller="CheckoutController">
+    <header class="popup__header">
+        <span class="popup__close" ng-click="closePopup()">
+            <svg viewBox="0 0 475.2 475.2">
+               <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+            </svg>
+        </span>
+        <h2>
+            Нова поръчка
+        </h2>
+    </header>
+    <div class="popup__content">
+        <form autocomplete="off" name="basketForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Продукт
+                        </th>
+                        <th>
+                            Брой
+                        </th>
+                        <th>
+                            Ед. цена
+                        </th>
+                        <th>
+                            Общо
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ngCart.getCart().items track by $index">
+                        <td>
+                            <span class="icon-remove icon-remove--basket" ng-click="ngCart.removeItemById(item.getId())">
+                                <svg viewBox="0 0 486.4 486.4">
+                                   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_remove"></use>
+                                </svg>
+                            </span>
+                            <div class="media-object">
+                                <div class="media-object-section">
+                                    <div class="thumbnail">
+                                        <a href="/products/details/{{item.getData().ProductLink}}">
+                                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{ item.getName() }}" 
+                                                srcset="{{ item.getData().ProductPhoto }}" width="100"
+                                            >
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="media-object-section">
+                                    <h4>
+                                        <a href="/products/details/{{item.getData().ProductLink}}">
+                                            {{ item.getName() }}
+                                        </a>
+                                    </h4>
+                                    <p>
+                                        #{{ item.getId() }}<span ng-if="item.getData().ProductSize != null"> | Размер: {{item.getData().ProductSize}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-thead="Брой">
+                            <div class="spinner">
+                                <span class="spinner__ctrl spinner__ctrl--down" 
+                                        ng-click="item.setQuantity(-1, true)"
+                                        ng-class="{'spinner__ctrl--disabled':item.getQuantity() == 1}"
+                                >
+                                    <span>
+                                        -
+                                    </span>
+                                </span>
+                                <span class="spinner__input">
+                                    <span>
+                                        {{ item.getQuantity() | number }}
+                                    </span>
+                                </span>
+                                <span class="spinner__ctrl spinner__ctrl--up" 
+                                        ng-click="item.setQuantity(1, true, item.getData().ProductQty)"
+                                        ng-class="{'spinner__ctrl--disabled':item.getQuantity() >= item.getData().ProductQty}"
+                                >
+                                    <span>
+                                        +
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td data-thead="Ед. цена">
+                            {{ item.getPrice() | currency:"BGN " }}
+                        </td>
+                        <td data-thead="Общо">
+                            {{ item.getTotal() | currency:"BGN " }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="small-12 medium-4 columns float-right">
+                    <ul class="basket__bill">
+                        <li ng-show="ngCart.getTax()">
+                            <span>
+                                ДДС ({{ ngCart.getTaxRate() }}%)
+                            </span>
+                            {{ ngCart.getTax() | currency:"BGN " }}
+                        </li>
+                        <li ng-show="ngCart.getShipping()">
+                            <span>
+                                Доставка
+                            </span>
+                            {{ ngCart.getShipping() | currency:"BGN " }}
+                        </li>
+                        <li>
+                            <span>
+                                Общо
+                            </span>
+                            {{ ngCart.totalCost() | currency:"BGN " }}
+                        </li>
+                        <li class="input">
+                            <label for="basket_note" class="input__label">
+                                Забележка
+                            </label>
+                            <textarea class="input__field" value="" ng-model="basket.note" id="basket_note"></textarea>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="small-12 medium-8 columns">
+                    <div class="basket__form">
+                        <ul class="tabs">
+                            <li class="tabs__tab active" data-tab="basket_user" ng-if="!userIsLogged">
+                                <a href="javascript:;">
+                                    Данни за потребителя
+                                </a>
+                            </li>
+                            <li class="tabs__tab" data-tab="basket_delivery" ng-class="{'active':userIsLogged}">
+                                <a href="javascript:;">
+                                    Данни за доставка
+                                </a>
+                            </li>
+                            <li class="tabs__tab" data-tab="basket_invoice">
+                                <a href="javascript:;">
+                                    Данни за фактура
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tabs-content active" data-tab-section="basket_user" ng-if="!userIsLogged">
+                            <h4>
+                                Данни за потребителя
+                            </h4>
+
+                            <ul>
+                                <li class="input">
+                                    <label for="basket_name" class="input__label">
+                                        Име
+                                    </label>
+                                    <input type="text" class="input__field" value="" ng-model="basket.user.name" id="basket_name" required="required" />
+                                </li>
+                                <li class="input">
+                                    <label for="basket_last_name" class="input__label">
+                                        Фамилия
+                                    </label>
+                                    <input type="text" class="input__field" value="" ng-model="basket.user.lastname" id="basket_last_name" required="required" />
+                                </li>
+                                <li class="input">
+                                    <label for="basket_email" class="input__label">
+                                        И-мейл
+                                    </label>
+                                    <input type="email" class="input__field" value="" ng-model="basket.user.email" name="mail" id="basket_email" required="required" />
+                                </li>
+                                <li class="form-notification form-notification--error" ng-if="basketForm.mail.$error.email">
+                                    Въвели сте грешен имейл
+                                </li>
+                                <li class="input">
+                                    <label for="basket_password" class="input__label">
+                                        Парола
+                                    </label>
+                                    <input type="password" class="input__field" value="" ng-model="basket.user.password" name="password" id="basket_password" required="required" ng-minlength="6" />
+                                </li>
+                                <li class="form-notification form-notification--error" ng-if="basketForm.password.$error.minlength">
+                                    Паролата трябва да съдържа поне 6 символа
+                                </li>
+                            </ul>
+
+                            <a href="javascript:;" class="button button--big" data-open-popup="http://ecommerce/modules/users/views/login.html">
+                                Имам вече регистрация
+                            </a>
+                        </div>
+
+                        <div class="tabs-content" data-tab-section="basket_delivery" ng-class="{'active':userIsLogged}">
+                            <h4>
+                                Данни за доставка
+                            </h4>
+
+                            <ul>
+                                <li class="input">
+                                    <label for="basket__address" class="input__label">
+                                        Адрес
+                                    </label>
+                                    <input type="text" class="input__field" value="" ng-model="basket.delivery.address" id="basket__address" required="required" />
+                                </li>
+                                <li class="input">
+                                    <label for="basket_city" class="input__label">
+                                        Град
+                                    </label>
+                                    <input type="text" class="input__field" value="" ng-model="basket.delivery.city" id="basket_city" required="required" />
+                                </li>
+                                <li class="input">
+                                    <label for="basket_post_code" class="input__label">
+                                        П.К
+                                    </label>
+                                    <input type="text" class="input__field" value="" ng-model="basket.delivery.postcode" id="basket_post_code" name="delivery_postcode" required="required" ng-pattern="/^(\d{4})$/" />
+                                </li>
+                                <li class="form-notification form-notification--error" ng-if="basketForm.delivery_postcode.$error.pattern">
+                                    Въвели сте грешен П.К
+                                </li>
+                                <li class="input">
+                                    <label for="basket_phone" class="input__label">
+                                        Телефон
+                                    </label>
+                                    <input type="text" class="input__field" value="" ng-model="basket.delivery.phone" id="basket_phone" name="delivery_phone" ng-patter="/^\d*$/" required="required" phone-number />
+                                </li>
+                                <li class="form-notification form-notification--error" ng-if="basketForm.delivery_phone.$error.pattern">
+                                    Въвели сте грешен Телефон
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tabs-content" data-tab-section="basket_invoice">
+                            <h4>
+                                Данни за фактура
+                            </h4>
+
+                            <ul class="basket__options">
+                                <li>
+                                    <label for="basket_invoice" class="radio">
+                                        <input type="radio" id="basket_invoice" ng-model="basket.invoice" value="1" />
+                                        <span class="radio__input"></span>
+                                        <span class="radio__label">
+                                            Фактура
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="basket_invoice_no" class="radio">
+                                        <input type="radio" id="basket_invoice_no" ng-model="basket.invoice" value="0" ng-init="basket.invoice=0" />
+                                        <span class="radio__input"></span>
+                                        <span class="radio__label">
+                                            Без фактура
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+
+                            <ul class="basket__options" ng-if="basket.invoice == 1">
+                                <li>
+                                    <label for="basket_invoice_person" class="radio">
+                                        <input type="radio" id="basket_invoice_person" ng-model="basket.invoicetype" value="person" ng-init="basket.invoicetype='person'" />
+                                        <span class="radio__input"></span>
+                                        <span class="radio__label">
+                                            Частно лице
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="basket_invoice_firm" class="radio">
+                                        <input type="radio" id="basket_invoice_firm" ng-model="basket.invoicetype" value="firm" />
+                                        <span class="radio__input"></span>
+                                        <span class="radio__label">
+                                            Фирма
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+
+                            <div class="basket__toggable-list" ng-if="basket.invoice == 1 && (basket.invoicetype == 'person' || basket.invoicetype == 'firm')">
+                                <ul ng-if="basket.invoicetype == 'person'">
+                                    <li class="input">
+                                        <label for="basket_invoice_person_name" class="input__label">
+                                            Име
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoiceperson.name" id="basket_invoice_person_name" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_person_last_name" class="input__label">
+                                            Фамилия
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoiceperson.lastname" id="basket_invoice_person_last_name" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_person_phone" class="input__label">
+                                            ЕГН
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoiceperson.egn" id="basket_invoice_person_phone" name="invoice_egn" required="required" ng-pattern="/^[0-9]{1,10}$/" />
+                                    </li>
+                                    <li class="form-notification form-notification--error" ng-if="basketForm.invoice_egn.$error.pattern">
+                                        Въвели сте грешно ЕГН
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_person_address" class="input__label">
+                                            Адрес
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoiceperson.address" id="basket_invoice_person_address" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_person_city" class="input__label">
+                                            Град
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoiceperson.city" id="basket_invoice_person_city" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_person_post_code" class="input__label">
+                                            П.К
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoiceperson.postcode" id="basket_invoice_person_post_code" name="invoice_postcode" required="required" ng-pattern="/^(\d{4})$/" />
+                                    </li>
+                                    <li class="form-notification form-notification--error" ng-if="basketForm.invoice_postcode.$error.pattern">
+                                        Въвели сте грешен П.К
+                                    </li>
+                                </ul>
+
+                                <ul ng-if="basket.invoicetype == 'firm'">
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_name" class="input__label">
+                                            Име на фирма
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.name" id="basket_invoice_firm_name" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_mol" class="input__label">
+                                            МОЛ
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.mol" id="basket_invoice_firm_mol" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_eik" class="input__label">
+                                            ЕИК
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.eik" id="basket_invoice_firm_eik" name="invoice_eik" required="required" ng-pattern="/^[0-9]{1,9}$/" />
+                                    </li>
+                                    <li class="form-notification form-notification--error" ng-if="basketForm.invoice_eik.$error.pattern">
+                                        Въвели сте грешен ЕИК
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_iban" class="input__label">
+                                            ИН по ДДС
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.iban" id="basket_invoice_firm_iban" name="invoice_iban" required="required" ng-pattern="/^BG\d{2}\s?([0-9a-zA-Z]{4}\s?){4}[0-9a-zA-Z]{2}$/" />
+                                    </li>
+                                    <li class="form-notification form-notification--error" ng-if="basketForm.invoice_iban.$error.pattern">
+                                        Въвели сте грешен ИН по ДДС
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_address" class="input__label">
+                                            Адрес
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.address" id="basket_invoice_firm_address" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_city" class="input__label">
+                                            Град
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.city" id="basket_invoice_firm_city" required="required" />
+                                    </li>
+                                    <li class="input">
+                                        <label for="basket_invoice_firm_post_code" class="input__label">
+                                            П.К
+                                        </label>
+                                        <input type="text" class="input__field" value="" ng-model="basket.invoicefirm.postcode" id="basket_invoice_firm_post_code" name="invoice_postcode" required="required" ng-pattern="/^(\d{4})$/" />
+                                    </li>
+                                     <li class="form-notification form-notification--error" ng-if="basketForm.invoice_postcode.$error.pattern">
+                                        Въвели сте грешен П.К
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <footer class="basket__footer">
+                <p class="text-center basket__footer__terms">
+                    <label for="agree_terms" class="checkbox">
+                        <input type="checkbox" id="agree_terms" ng-model="basket.terms" required="required" />
+                        <span class="checkbox__input"></span>
+                        <span class="checkbox__label">
+                            Съгласен съм с 
+                        </span>
+                    </label>
+                    <a href="/pages/obshti-usloviya" target="_blank">
+                        общите условия
+                    </a>
+                </p>
+            
+                <ul class="row">
+                    <li class="small-6 columns">
+                        <a href="javascript:;" class="button button--secondary button--big" ng-click="closePopup()">
+                            Продължи с пазаруването
+                        </a>
+                    </li>
+                    <li class="small-6 columns" ng-if="basketForm.$invalid">
+                        <button type="submit" class="button--big" ng-disabled="basketForm.$invalid">
+                            Поръчай
+                        </button>
+                    </li>
+                    <li class="small-6 columns" ng-if="basketForm.$valid">
+                        <ngcart-checkout service="http" settings="{ url:'http://ecommerce/modules/orders/controllers/basket.php', data: basket, callback: checkoutComplete }"></ngcart-checkout>
+                    </li>
+                </ul>
+            </footer>
+        </form>
+    </div>
+</article>

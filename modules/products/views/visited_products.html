@@ -1,0 +1,42 @@
+<article class="popup popup--medium popup--favorite-products">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Разгледани продукти
+		</h2>
+	</header>
+	<div class="popup__content">
+		<div>
+			<div class="media-object" ng-repeat="product in products">
+				<div class="media-object-section">
+					<div class="thumbnail">
+						<a href="/products/details/{{product.ProductLink}}">
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{product.ProductName}}" 
+			                    srcset="{{product.ProductPhoto}}" width="100"
+			                >
+						</a>
+					</div>
+				</div>
+				<div class="media-object-section">
+					<h4>
+						<a href="/products/details/{{product.ProductLink}}">
+							{{product.ProductName}}
+						</a>
+					</h4>
+					<ul>
+						<li class="strike" ng-if="product.ProductOldPrice != ''">
+							{{product.ProductOldPrice | currency:"BGN "}}
+						</li>
+						<li>
+							{{product.ProductPrice | currency:"BGN "}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

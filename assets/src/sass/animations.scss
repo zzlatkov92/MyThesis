@@ -1,0 +1,23 @@
+@keyframes pulse {
+    0%,
+    100% {
+    	width: 0px;
+    	height: 0px;
+    }
+    50% {
+    	width: 20px;
+    	height: 20px;
+    }
+}
+
+@-webkit-keyframes pulse {
+    0%,
+    100% {
+    	width: 0px;
+    	height: 0px;
+    }
+    50% {
+    	width: 20px;
+    	height: 20px;
+    }
+}

@@ -1,0 +1,76 @@
+.sidebar__button-open {
+	display: none;
+	@include generate-spacing(padding,2,left);
+	@include generate-spacing(padding,2,right);
+	@include generate-spacing(margin,2,bottom);
+	a {
+		color: $color-gray-5;
+		background: $color-gray-1;
+		border-radius: 4px;
+		display: block;
+		@include generate-spacing(padding,2);
+	}
+}
+
+.sidebar__button {
+	display: none !important;
+	@include generate-spacing(margin,2,bottom);
+}
+
+.sidebar__content {
+	border: 1px solid $color-gray-4;
+	border-radius: 4px;
+	@include generate-spacing(margin,2,bottom);
+}
+
+.sidebar__content__header {
+	background: $color-gray-2;
+	@include generate-spacing(padding,2);
+}
+
+.sidebar__content__title {
+	color: $color-gray-9;
+	padding: 0;
+}
+
+.sidebar__content__cnt {
+	@include generate-spacing(padding,2);
+}
+
+.sidebar__content__list {
+	li {
+		@include generate-spacing(padding,2,bottom);
+		&:last-of-type {
+			padding: 0;
+		}
+		a {
+			display: block;
+		}
+	}	
+}
+
+@media screen and (max-width: 1024px) {
+	.sidebar {
+		display: none;
+		background: $color-gray-2;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		overflow-y: scroll;
+		z-index: 99999;
+		@include generate-spacing(padding,2);
+	}
+	.sidebar__content {
+		background: $color-gray-10;
+	}
+	.sidebar-neighbor,
+	.sidebar {
+		width: 100%;
+	}
+	.sidebar__button-open,
+	.sidebar__button {
+		display: block !important;
+	}
+}

@@ -1,0 +1,45 @@
+<article class="popup popup--medium">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Коментари
+		</h2>
+	</header>
+	<div class="popup__content"  ng-controller="UserReviewsController">
+		<div ng-if="reviews.length">
+			<div class="media-object" ng-repeat="review in reviews">
+				<div class="media-object-section">
+					<div class="thumbnail">
+						<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{review.ProductName}}" 
+		                    srcset="{{review.PhotoSrc}}" width="100"
+		                >
+					</div>
+				</div>
+				<div class="media-object-section">
+					<h4>{{review.ProductName}}</h4>
+					<p>
+						{{review.ReviewContent}}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="notitification-placeholder" ng-if="!reviews.length">
+			<span class="notitification-placeholder__icon">
+				<svg viewBox="0 0 612 612">
+				   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_comment"></use>
+				</svg>
+			</span>
+			<h2 class="notitification-placeholder__title">
+				Нямате добавени коментари
+			</h2>
+			<p class="notitification-placeholder__message">
+				Не сте написали, нито един коментар към продуктите
+			</p>
+		</div>
+	</div>
+</article>

@@ -1,0 +1,88 @@
+thead {
+	tr {
+		th {
+			color: $color-gray-4;
+			border-bottom: 1px solid $color-gray-4;
+			@include generate-font(0);
+			@include generate-spacing(padding,1); 
+		}
+	}
+}
+
+tbody {
+	tr {
+		td {
+			color: $color-gray-2;
+			border-bottom: 1px solid $color-gray-4;
+			@include generate-font(1);
+			@include generate-spacing(padding,1); 
+			.media-object {
+				margin: 0;
+			}
+			&.big {
+				width: 50%;
+			}
+			&.medium {
+				width: 30%;
+			}
+			&.small {
+				width: 20%;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	table,
+	thead,
+	tbody,
+	tr,
+	td,
+	th {
+		display: block;
+	}
+
+	thead {
+		display: none;
+	}
+
+	tbody {
+		tr {
+			border: 1px solid $color-gray-4;
+			@include generate-spacing(margin,2,bottom);
+			td {
+				&.big,
+				&.medium,
+				&.small {
+					width: 100%;
+				}
+				&:last-of-type {
+					border: 0;
+				}
+				&[data-thead] {
+					text-align: right;
+					position: relative;
+					padding-left: 45%;
+					.spinner {
+						display: inline-block;
+						width: 100%;
+					}
+					&:before {
+						content: attr(data-thead);
+						color: $color-gray-4;
+						text-align: left;
+						word-wrap: break-word;
+						display: block;
+						position: absolute;
+						top: 50%;
+						left: 0;
+						width: 45%;
+						transform: translate3d(0,-50%,0);
+						@include generate-spacing(padding,1,left); 
+						@include generate-font(0);
+					}
+				}
+			}
+		}
+	}
+}

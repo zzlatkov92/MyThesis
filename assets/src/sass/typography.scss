@@ -1,0 +1,83 @@
+h1,
+.h1 {
+	margin: 0;
+	@include generate-font(6);
+	@include generate-spacing(padding,6,bottom);
+}
+
+h2,
+.h2 {
+	margin: 0;
+	@include generate-font(5);
+	@include generate-spacing(padding,5,bottom);
+}
+
+h3,
+.h3 {
+	margin: 0;
+	@include generate-font(4);
+	@include generate-spacing(padding,4,bottom);
+}
+
+h4,
+.h4 {
+	margin: 0;
+	@include generate-font(3);
+	@include generate-spacing(padding,3,bottom);
+}
+
+.h5,
+.h5 {
+	margin: 0;
+	@include generate-font(2);
+	@include generate-spacing(padding,2,bottom);
+}
+
+p,
+.paragraph {
+	margin: 0;
+	font-family: 'open_sans_regular', Arial, sans-serif;
+	@include generate-font(1);
+	@include generate-spacing(padding,1,bottom);
+}
+
+.small {
+	font-family: 'open_sans_regular', Arial, sans-serif;
+	@include generate-font(0);
+	@include generate-spacing(padding,0,bottom); 
+}
+
+a {
+	color: $color-gray-2;
+	font-family: 'open_sans_regular', Arial, sans-serif;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: inset 0 -1px 0 $color-gray-2;
+	&:hover,
+	&:focus {
+		color: $color-gray-2;
+	}
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5 {
+	font-family: 'open_sans_bold', Arial, sans-serif;
+	a {
+		box-shadow: none;
+		font-family: 'open_sans_bold', Arial, sans-serif;
+	}
+}
+
+strong,
+b {
+	font-family: 'open_sans_bold', Arial, sans-serif;
+	font-weight: normal;
+}

@@ -1,0 +1,37 @@
+<div class="page page--admin">
+	<article class="popup">
+		<header class="popup__header">
+			<h2>
+				Вход администратор
+			</h2>
+		</header>
+		<div class="popup__content">
+			<form autocomplete="off" name="adminLogin">
+				<ul>
+					<li class="input">
+						<label for="login_email" class="input__label">
+							И-мейл
+						</label>
+						<input type="email" class="input__field" value="" ng-model="user.mail" name="mail" id="login_email" required="required" />
+					</li>
+					<li class="form-notification form-notification--error" ng-if="adminLogin.mail.$error.email">
+                    	Въвели сте грешен имейл
+                    </li>
+					<li class="input">
+						<label for="login_password" class="input__label">
+							Парола
+						</label>
+						<input type="password" class="input__field" value="" ng-model="user.pass" name="password" id="login_password" ng-minlength="6" required="required" />
+					</li>
+					<li class="form-notification form-notification--error" ng-if="adminLogin.password.$error.minlength">
+                    	Паролата трябва да съдържа поне 6 символа
+                    </li>
+				</ul>
+
+				<button type="submit" class="button--big" ng-click="login(user);" ng-disabled="adminLogin.$invalid">
+					Вход
+				</button>
+			</form>
+		</div>
+	</article>
+</div>

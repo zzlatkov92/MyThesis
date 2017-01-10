@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta content="utf-8" http-equiv="encoding">
+		<meta http-equiv='cache-control' content='no-cache'>
+		<meta http-equiv='expires' content='0'>
+		<meta http-equiv='pragma' content='no-cache'>
+		<base href="/">
+		<title>E-commerce</title>
+		<link rel="stylesheet" type="text/css"
+			href="http://ecommerce/assets/build/css/critical.min.css"
+		/>
+		<link rel="preload" type="text/css"
+			href="http://ecommerce/assets/build/css/app.min.css" as="style" onload="this.rel='stylesheet'"
+		/>
+	</head>
+	<body ng-controller="AppController">
+		<div class="do-pre-loader loader-main">
+			<div class="sk-folding-cube">
+				<div class="sk-cube1 sk-cube"></div>
+				<div class="sk-cube2 sk-cube"></div>
+				<div class="sk-cube4 sk-cube"></div>
+				<div class="sk-cube3 sk-cube"></div>
+			</div>
+		</div>
+
+		<header class="main_header" id="main_header">
+			<div class="shell clearfix main_header__top_bar">
+				<a href="/" class="main_header__logo">
+					<img src="http://ecommerce/assets/build/img/logo.png" 
+						alt="E-commerce" 
+						width="278" 
+						height="20" 
+					/>
+				</a>
+				<ul class="main_header__links clearfix" ng-if="pages.length">
+					<li ng-repeat="page in pages">
+						<a href="/pages/{{page.PageLink}}">
+							{{page.PageName}}
+						</a>
+					</li>
+				</ul>
+				<ul class="main_header__user clearfix">
+					<li>
+						<a href="javascript:;" class="main_header__user__links" data-open-popup="http://ecommerce/modules/contacts/views/index.html">
+							<span class="header__icon">
+								<svg viewBox="0 0 32.666 32.666">
+								   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_contact"></use>
+								</svg>
+							</span>
+							Запитване
+						</a>
+					</li>
+					<li ng-if="products.length">
+						<a href="javascript:;" class="main_header__user__links do-show-search">
+							<span class="header__icon">
+								<svg viewBox="0 0 451 451">
+								   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_search"></use>
+								</svg>
+							</span>
+							Търси
+						</a>
+					</li>
+					<li ng-if="userIsLogged == false">
+						<a href="javascript:;" class="main_header__user__links" data-open-popup="http://ecommerce/modules/users/views/login.html">
+							<span class="header__icon">
+								<svg viewBox="0 0 482.9 482.9">
+								   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_profile"></use>
+								</svg>
+							</span>
+							Вход
+						</a>
+					</li>
+					<li class="dropdown_owner do-open-dropdown" ng-if="userIsLogged == true">
+						<a href="javascript:;" class="main_header__user__links">
+							<span class="header__icon">
+								<svg viewBox="0 0 482.9 482.9">
+								   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_profile"></use>
+								</svg>
+							</span>
+							Профил
+						</a>
+						<ul class="dropdown dropdown--header">
+							<li>
+								<a href="javascript:;" data-open-popup="http://ecommerce/modules/users/views/profile.html">
+									<span class="dropdown__icon">
+										<svg viewBox="0 0 482.9 482.9">
+										   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_profile"></use>
+										</svg>
+									</span>
+									Моят профил
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" data-open-popup="http://ecommerce/modules/users/views/change_password.html">
+									<span class="dropdown__icon">
+										<svg viewBox="0 0 319.949 319.949">
+										   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_pass"></use>
+										</svg>
+									</span>
+									Смяна на парола
+								</a>
+							</li>
+							<li>
+								<a href="/orders">
+									<span class="dropdown__icon">
+										<svg viewBox="0 0 490.1 490.1">
+										   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_organization"></use>
+										</svg>
+									</span>
+									Поръчки
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" data-open-popup="http://ecommerce/modules/users/views/favorite_products.html">
+									<span class="dropdown__icon">
+										<svg viewBox="0 0 471.701 471.701">
+										   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_favorite"></use>
+										</svg>
+									</span>
+									Любими продукти
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" data-open-popup="http://ecommerce/modules/users/views/reviews.html">
+									<span class="dropdown__icon">
+										<svg viewBox="0 0 612 612">
+										   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_comment"></use>
+										</svg>
+									</span>
+									Коментари
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" ng-click="logout()">
+									<span class="dropdown__icon">
+										<svg viewBox="0 0 129 129">
+										   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_logout"></use>
+										</svg>
+									</span>
+									Изход
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ngcart-summary></ngcart-summary>
+					</li>
+				</ul>
+			</div>
+
+			<div class="main_header__categories_open do-show-categories" ng-if="categories.length">
+				<a href="javascript:;">
+					Покажи категории
+				</a>
+			</div>
+
+			<div class="main_header__categories_holder do-categories-to-show" ng-if="categories.length">
+				<a href="javascript:;" class="button button--big main_header__categories_button do-close-categories">
+					Затвори
+				</a>
+				<ul class="main_header__categories clearfix shell">
+					<li ng-repeat="category in categories | limitTo:11" class="do-close-categories">
+						<a href="/products/{{category.CategoryLink}}">
+							{{category.CategoryName}}
+						</a>
+					</li>
+					<li ng-if="categories.length > 11" class="do-close-categories">
+						<a href="/categories">
+							Всички категории
+						</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+
+		<div class="search do-search-to-be-shown" ng-if="products.length">
+			<form autocomplete="off" ng-controller="ProductsSearchController">
+				<div class="search__field">
+					<input type="text" ng-model="searchKey" value="" placeholder="Търси" class="do-live-search" />
+				</div>
+
+				<ul class="search__list" ng-if="noResults == true">
+					<li class="media-object search__list__item" ng-repeat="product in productsFound | limitTo:5">
+						<div class="media-object-section">
+							<div class="thumbnail">
+								<a href="/products/details/{{product.ProductLink}}">
+									<img src="{{product.ProductPhoto}}" alt="{{product.ProductName}}" width="100" />
+								</a>
+							</div>
+						</div>
+						<div class="media-object-section">
+							<h4>
+								<a href="/products/details/{{product.ProductLink}}">
+									{{product.ProductName}}
+								</a>
+							</h4>
+							<ul>
+								<li class="strike" ng-if="product.ProductOldPrice != ''">
+									{{product.ProductOldPrice}} BGN
+								</li>
+								<li>
+									{{product.ProductPrice}} BGN
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+
+				<a href="/products/search/{{searchKey}}" class="button button--big search__button" ng-if="noResults == true && productsFound.length">
+					Покажи всички
+				</a>
+
+				<div class="notitification-placeholder"  ng-if="noResults == true && !productsFound.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 451 451">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_search"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма намерени продукти
+					</h2>
+					<p class="notitification-placeholder__message">
+						Не бяха намерени продукти с търсените от Вас критерии
+					</p>
+				</div>
+
+				<a href="javascript:;" class="button button--big search__button search__button--close do-close-search">
+					Затвори търсенето
+				</a>
+			</form>
+		</div>
+
+		<div id="main_holder" class="main-holder">
+			<main ng-view>
+			</main>
+
+			<footer class="main_footer">
+				<div class="main_footer__content">
+					<ul class="main_footer__links" ng-if="pages.length">
+						<li ng-repeat="page in pages">
+							<a href="/pages/{{page.PageLink}}">
+								{{page.PageName}}
+							</a>
+						</li>
+					</ul>
+					<p>
+						&copy; 2016 E-commerce Всички права запазени
+					</p>
+				</div>
+			</footer>
+		</div>
+
+		<script id="loadcss">
+			loadCSS( "http://ecommerce/assets/build/css/app.min.css", document.getElementById("loadcss") );
+		</script>
+
+		<script type="text/javascript" src="http://ecommerce/assets/build/js/app.min.js" async></script>
+	</body>
+</html>

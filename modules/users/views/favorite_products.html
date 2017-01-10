@@ -1,0 +1,63 @@
+<article class="popup popup--medium popup--favorite-products">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Любими продукти
+		</h2>
+	</header>
+	<div class="popup__content" ng-controller="UserFavoriteProducts">
+		<div ng-if="favproducts.length">
+			<div class="media-object" ng-repeat="fav in favproducts">
+				<div class="media-object-section">
+					<div class="thumbnail">
+						<a href="/products/details/{{fav.ProductLink}}">
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{fav.ProductName}}" 
+			                    srcset="{{fav.ProductPhoto}}" width="100"
+			                >
+						</a>
+					</div>
+				</div>
+				<div class="media-object-section">
+					<h4>
+						<a href="/products/details/{{fav.ProductLink}}">
+							{{fav.ProductName}}
+						</a>
+					</h4>
+					<ul>
+						<li class="strike" ng-if="fav.ProductOldPrice != ''">
+							{{fav.ProductOldPrice | currency:"BGN "}}
+						</li>
+						<li>
+							{{fav.ProductPrice | currency:"BGN "}}
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="javascript:;" class="button button--secondary" ng-click="removeFavorite(fav.FavoriteId)">
+								Премахни
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="notitification-placeholder" ng-if="!favproducts.length">
+			<span class="notitification-placeholder__icon">
+				<svg viewBox="0 0 471.701 471.701">
+				   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_favorite"></use>
+				</svg>
+			</span>
+			<h2 class="notitification-placeholder__title">
+				Нямате добавени продукти
+			</h2>
+			<p class="notitification-placeholder__message">
+				Не сте добавили нито един продукт като любим
+			</p>
+		</div>
+	</div>
+</article>

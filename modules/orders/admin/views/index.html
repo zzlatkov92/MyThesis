@@ -1,0 +1,86 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с поръчки
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<ng-include src="'http://ecommerce/partials/admin_sidebar.html'"></ng-include>
+
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<form class="sidebar-neighbor medium-12 large-9 columns" ng-if="orders.length">
+					<ng-include src="'http://ecommerce/partials/admin_page_search.html'"></ng-include>
+
+					<table>
+						<thead>
+							<tr>
+								<th>
+									Клиент
+								</th>
+								<th>
+									Дата
+								</th>
+								<th>
+									Статус
+								</th>
+								<th>
+									Цена
+								</th>
+								<th>
+									Опции
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="order in orders | filter:searchFilter | orderBy:'-OrderId'">
+								<td>
+									#{{order.OrderId}} {{order.DeliveryUser}}
+								</td>
+								<td data-thead="Дата">
+									{{order.OrderDate}}
+								</td>
+								<td data-thead="Статус">
+									<span ng-if="order.OrderStatus == 'send'">
+										Изпратена
+									</span>
+									<span ng-if="order.OrderStatus == 'completed'">
+										Приключена
+									</span>
+									<span ng-if="order.OrderStatus == 'declined'">
+										Анулирана
+									</span>
+								</td>
+								<td data-thead="Цена">
+									{{order.TotalPrice}}
+								</td>
+								<td class="small">
+									<a href="javascript:;" class="button button--big button--icon" ng-click="EditOrder(order.OrderId)">
+										<svg viewBox="0 0 486.4 486.4">
+		                                   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_edit"></use>
+		                                </svg>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div class="notitification-placeholder" ng-if="!orders.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 490.1 490.1">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_organization"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма извършени поръчки
+					</h2>
+					<p class="notitification-placeholder__message">
+						До момента не са извършени поръчки
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

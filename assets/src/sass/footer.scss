@@ -1,0 +1,37 @@
+.main_footer {
+	background: $color-gray-8;
+ 	position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    @media screen and (max-width: 1024px) {
+    	height: 100px;
+    }
+    .main_footer__content {
+    	position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate3d(-50%,-50%,0);
+    }
+    .main_footer__links {
+    	display: none;
+    	@include generate-spacing(padding,2,top);
+    	text-align: center;
+    	li {
+    		display: inline-block;
+    		a {
+    			color: $color-gray-5;
+    			box-shadow: none;
+    		}
+    	}
+    	@media screen and (max-width: 1024px) {
+    		display: block;
+    	}
+    }
+	p {
+		color: $color-gray-5;
+		text-align: center;
+		@include generate-spacing(padding,2);
+	}
+}

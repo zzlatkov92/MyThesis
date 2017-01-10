@@ -1,0 +1,17 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Резултати от търсене
+		</h1>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<div class="row row--product">
+				<div class="small-12 medium-6 large-3 columns row__column" ng-repeat="product in products">
+					<ng-include src="'http://ecommerce/partials/product.html'"></ng-include>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

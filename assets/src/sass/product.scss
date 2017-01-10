@@ -1,0 +1,142 @@
+.product {
+	background: white;
+	border-radius: 6px;
+	@include generate-spacing(padding,2);
+	.product__photo {
+		box-shadow: none;
+		display: block;
+		@include generate-spacing(margin,2,bottom);
+		img {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+	.product__title {
+		a {
+			color: $color-gray-2;
+		}
+	}
+	.product__price {
+		li {
+			color: $color-gray-3;
+			display: inline-block;
+			@include generate-font(2);
+			@include generate-spacing(margin,2,right);
+			&.product__price__old {
+				color: $color-gray-5;
+				position: relative;
+				&:before {
+					content: '';
+					background: $color-gray-5;
+					display: block;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate3d(-50%,-50%,0);
+					width: 110%;
+					height: 1px;
+				}
+			}
+		}
+	}
+
+	.product__button {
+		@include generate-spacing(margin,4,top);
+	}
+}
+
+.product-details__info {
+	border: 1px solid $color-gray-4;
+	border-radius: 4px;
+	@include generate-spacing(padding,2);
+	li {
+		color: $color-gray-2;
+		@include generate-font(1);
+		@include generate-spacing(padding,1,bottom);
+		&:last-of-type {
+			padding: 0;
+		}
+		span {
+			color: $color-gray-5;
+			display: block;
+			@include generate-font(0);
+		}
+		select {
+			margin: 0;
+		}
+	}
+}
+
+.product-details__price {
+	@include generate-spacing(padding,4,top);
+	li {
+		color: $color-gray-2;
+		display: inline-block;
+		@include generate-font(2);
+		@include generate-spacing(margin,2,right);
+		&:last-of-type {
+			margin: 0;
+		}
+		&.product-details__price__old {
+			color: $color-gray-5;
+			position: relative;
+			&:before {
+				content: '';
+				background: $color-gray-5;
+				display: block;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate3d(-50%,-50%,0);
+				width: 110%;
+				height: 1px;
+			}
+		}
+	}
+}
+
+.product-details__buttons {
+	@include generate-spacing(padding,4,top);
+	li {
+		@include generate-spacing(padding,2,bottom);
+		&:last-of-type {
+			padding: 0;
+		}
+		.form-notification {
+			margin: 0;
+			@include generate-spacing(margin,2,top);
+		}
+	}
+}
+
+.product-details__section {
+	@include generate-spacing(padding,6,bottom);
+	h4 {
+		color: $color-gray-2;
+		border-bottom: 1px solid $color-gray-4;
+		@include generate-spacing(margin,2,bottom);
+	}
+}
+
+.product-details__section--characteristics {
+	ul {
+		column-count: 2;
+		column-gap: 20px;
+		li {
+			vertical-align: baseline;
+			page-break-inside: avoid;
+			break-inside: avoid;
+			div {
+				@include generate-spacing(padding,2,bottom);
+				span {
+					color: $color-gray-5;
+					display: block;
+					@include generate-font(0);
+				}
+				p {
+					color: $color-gray-2;
+				}
+			}
+		}
+	}
+}

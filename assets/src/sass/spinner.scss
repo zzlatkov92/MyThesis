@@ -1,0 +1,64 @@
+.spinner {
+	border: 1px solid $color-gray-4;
+	border-radius: 4px;
+	width: 200px;
+	height: 40px;
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+	.spinner__ctrl,
+	.spinner__input {
+		float: left;
+		height: 100%;
+	}
+	.spinner__ctrl {
+		background: $color-gray-6;
+		position: relative;
+		width: 20%;
+		cursor: pointer;
+		&.spinner__ctrl--disabled {
+			background: $color-gray-8;
+			cursor: default;
+			span {
+				color: $color-gray-6;
+			}
+		}
+		span {
+			color: $color-gray-4;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%,-50%,0);
+			@include generate-font(6);
+		}
+		&.spinner__ctrl--up {
+			border-left: 1px solid $color-gray-4;
+			border-radius: 0 4px 4px 0;
+		}
+		&.spinner__ctrl--down {
+			border-right: 1px solid $color-gray-4;
+			border-radius: 4px 0 0 4px;
+		}
+	}
+	.spinner__input {
+		position: relative;
+		width: 60%;
+		span {
+			color: $color-gray-2;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%,-50%,0);
+		}
+		input {
+			background: none;
+			border: 0;
+			box-shadow: none;
+			text-align: center;
+			margin: 0;
+			height: 100%;
+		}
+	}
+}

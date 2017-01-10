@@ -1,0 +1,79 @@
+.input {
+	background: $color-gray-3;
+	border-radius: 4px;
+	@include generate-spacing(padding,1);
+	@include generate-spacing(margin,2,bottom);
+	&.input--error {
+		background: rgb(220,0,0);
+	}
+	&.input--success {
+		background: rgb(5,195,0);
+	}
+	.input__label {
+		color: $color-gray-8;
+		@include generate-font(0);
+	}
+	.input__field {
+		color: $color-gray-2;
+		background: white;
+		border: 0;
+		border-radius: 4px;
+		display: block;
+		width: 100%;
+		height: 40px;
+		margin: 0;
+		@include generate-font(1);
+		@include generate-spacing(padding,1);
+		&.input__field--textarea {
+			height: 80px;
+		}
+		&.input__field--upload {
+			height: auto;
+		}
+		&:focus {
+			box-shadow: none;
+		}
+		&[disabled="disabled"] {
+			background: $color-gray-9;
+		}
+	}
+	.spinner {
+		width: 100%;
+		.spinner__input {
+			color: $color-gray-2;
+			background: white;
+		}
+	}
+	select {
+		height: auto;
+	}
+	.dropbox {
+		color: $color-gray-8;
+		border-color: $color-gray-8;
+	}
+	.checkbox__label, 
+	.radio__label {
+		color: $color-gray-8;
+	}
+}
+
+input {
+	color: $color-gray-2;
+	&::-webkit-input-placeholder { /* Chrome */
+	  color: $color-gray-2;
+	}
+	&:-ms-input-placeholder { /* IE 10+ */
+	  color: $color-gray-2;
+	}
+	&::-moz-placeholder { /* Firefox 19+ */
+	  color: $color-gray-2;
+	  opacity: 1;
+	}
+	&:focus {
+		box-shadow: none;
+	}
+}
+
+textarea {
+	height: 80px;
+}

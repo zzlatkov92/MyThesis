@@ -1,0 +1,208 @@
+<article class="popup popup--large popup--order-details" ng-controller="AdminOrdersDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Поръчка #{{order.OrderId}}
+		</h2>
+		<p>
+			Статус: 
+			<span ng-if="order.OrderStatus == 'send'">
+				Изпратена
+			</span>
+			<span ng-if="order.OrderStatus == 'completed'">
+				Приключена
+			</span>
+			<span ng-if="order.OrderStatus == 'declined'">
+				Анулирана
+			</span>
+		</p>
+	</header>
+	<div class="popup__content">
+		<table>
+			<thead>
+				<tr>
+					<th>
+						Продукт
+					</th>
+					<th>
+						Брой
+					</th>
+					<th>
+						Ед. цена
+					</th>
+					<th>
+						Общо
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="product in order.Products">
+					<td>
+						<div class="media-object">
+							<div class="media-object-section">
+								<div class="thumbnail">
+									<a href="/products/details/{{product.ProductLink}}">
+										<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{{product.ProductName}}" 
+						                    srcset="{{product.ProductPhoto}}" width="100"
+						                >
+									</a>
+								</div>
+							</div>
+							<div class="media-object-section">
+								<h4>
+									<a href="/products/details/{{product.ProductLink}}">
+										{{product.ProductName}}
+									</a>
+								</h4>
+								<p>
+                                    #{{product.ProductCatNumber}}<span ng-if="product.ProductSize != ''"> | {{product.ProductSize}}</span>
+                                </p>
+							</div>
+						</div>
+					</td>
+					<td data-thead="Брой">
+						{{product.ProductCount}}
+					</td>
+					<td data-thead="Ед. цена">
+						{{product.ProductSinglePrice}}
+					</td>
+					<td data-thead="Общо">
+						{{product.ProductTotalPrice}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="row">
+			<div class="small-12 medium-4 columns">
+				<h4>
+					Данни за доставка
+				</h4>
+				<ul class="order__info">
+					<li>
+						<span class="small">
+							Получател
+						</span>
+						{{order.DeliveryUser}}
+					</li>
+					<li>
+						<span class="small">
+							Телефон
+						</span>
+						{{order.DeliveryPhone}}
+					</li>
+					<li>
+						<span class="small">
+							Адрес
+						</span>
+						{{order.DeliveryAddress}}, {{order.DeliveryCity}}, {{order.DeliveryPostCode}}
+					</li>
+				</ul>
+			</div>
+			<div class="small-12 medium-4 columns">
+				<h4>
+					Данни за фактура
+				</h4>
+				<ul class="order__info" ng-if="order.InvoiceId != null">
+					<li>
+						<span class="small" ng-if="order.InvoiceType == 'person'">
+							Получател
+						</span>
+						<span class="small" ng-if="order.InvoiceType == 'firm'">
+							Фирма
+						</span>
+						{{order.InvoiceName}}
+					</li>
+					<li ng-if="order.InvoiceEgn != null">
+						<span class="small">
+							ЕГН
+						</span>
+						{{order.InvoiceEgn}}
+					</li>
+					<li ng-if="order.InvoiceEik != null">
+						<span class="small">
+							ЕИК
+						</span>
+						{{order.InvoiceEik}}
+					</li>
+					<li ng-if="order.InvoiceMol != null">
+						<span class="small">
+							МОЛ
+						</span>
+						{{order.InvoiceMol}}
+					</li>
+					<li ng-if="order.InvoiceIban != null">
+						<span class="small">
+							ИН по ДДС
+						</span>
+						{{order.InvoiceIban}}
+					</li>
+					<li>
+						<span class="small">
+							Адрес
+						</span>
+						{{order.InvoiceAddress}}, {{order.InvoiceCity}}, {{order.InvoicePostCode}}
+					</li>
+				</ul>
+
+				<div class="form-notification form-notification--info" ng-if="order.InvoiceId == null">
+					Поръчката не съдържа данни за фактура
+				</div>
+			</div>
+			<div class="small-12 medium-4 columns">
+				<h4>
+					Ценоразписка
+				</h4>
+				<ul class="order__info">
+					<li>
+						<span class="small">
+							Доставка
+						</span>
+						{{order.DeliveryPrice | currency:"BGN "}}
+					</li>
+					<li>
+						<span class="small">
+							Общо
+						</span>
+						{{order.TotalPrice | currency:"BGN "}}
+					</li>
+					<li ng-if="order.OrderNote != ''">
+						<span class="small">
+							Бележка
+						</span>
+						{{order.OrderNote}}
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<form autocomplete="off" name="changeStatus" ng-if="!order.StatusChanged">
+			<input type="hidden" value="" ng-model="order.OrderId" />
+
+			<div class="input">
+				<label for="category_name" class="input__label">
+					Промени статуса
+				</label>
+				<select ng-model="order.status" required="required">
+					<option value="">
+						Избери статус
+					</option>
+					<option value="completed">
+						Приключена
+					</option>
+					<option value="declined">
+						Анулирана
+					</option>
+				</select>
+
+				<button type="submit" class="button--big" ng-disabled="changeStatus.$invalid" ng-click="changeOrderStatus(order.OrderId, order.status)">
+					Промени
+				</button>
+			</div>
+		</form>
+	</div>
+</article>

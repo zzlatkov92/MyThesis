@@ -1,0 +1,42 @@
+.checkbox,
+.radio {
+	cursor: pointer;
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+	input[type="checkbox"],
+	input[type="radio"] {
+		display: none;
+		&:checked {
+			& + .checkbox__input,
+			& + .radio__input {
+				background: $color-gray-2;
+			}
+		}
+	}
+}
+
+.checkbox__input,
+.radio__input {
+	background: white;
+	border: 1px solid $color-gray-2;
+	border-radius: 4px;
+	float: left;
+	width: 20px;
+	height: 20px;
+	@include generate-spacing(margin,2,right);
+}
+
+.radio__input {
+	border-radius: 50%;
+}
+
+.checkbox__label,
+.radio__label {
+	color: $color-gray-2;
+	width: auto;
+	overflow: hidden;
+	line-height: 20px;
+}

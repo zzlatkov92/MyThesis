@@ -1,0 +1,42 @@
+<article class="popup" ng-controller="AdminCategoriesDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2 ng-if="category.CategoryId != null">
+			Редактирай категория #{{category.CategoryId}}
+		</h2>
+
+		<h2 ng-if="category.CategoryId == null">
+			Добави категория
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form autocomplete="off" name="categoryEdit">
+			<input type="hidden" value="" ng-model="category.CategoryId" />
+
+			<ul>
+				<li class="input">
+					<label for="category_name" class="input__label">
+						Име
+					</label>
+					<input type="text" class="input__field" value="" ng-model="category.CategoryName" id="category_name" required="required" />
+				</li>
+			</ul>
+
+			<button type="submit" class="button--big" ng-click="saveCategory(category)"
+					ng-if="category.CategoryId != null" ng-disabled="categoryEdit.$invalid"
+			>
+				Редактирай
+			</button>
+
+			<button type="submit" class="button--big" ng-click="saveCategory(category)"
+					ng-if="category.CategoryId == null" ng-disabled="categoryEdit.$invalid"
+			>
+				Добави
+			</button>
+		</form>
+	</div>
+</article>

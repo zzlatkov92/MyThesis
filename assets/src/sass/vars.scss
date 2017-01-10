@@ -1,0 +1,32 @@
+// Colors
+$main-color: rgb(255,230,63);
+$secondary-color: rgb(255,230,63);
+$teritary-color: rgb(217,126,40);
+
+$color-gray-1: lighten(rgb(14,14,14), 5%);
+$color-gray-2: lighten(rgb(14,14,14), 15%);
+$color-gray-3: lighten(rgb(14,14,14), 25%);
+$color-gray-4: lighten(rgb(14,14,14), 35%);
+$color-gray-5: lighten(rgb(14,14,14), 45%);
+$color-gray-6: lighten(rgb(14,14,14), 55%);
+$color-gray-7: lighten(rgb(14,14,14), 65%);
+$color-gray-8: lighten(rgb(14,14,14), 75%);
+$color-gray-9: lighten(rgb(14,14,14), 85%);
+$color-gray-10: lighten(rgb(14,14,14), 95%);
+
+@font-face {
+    font-family: 'open_sans_bold';
+    src: url('http://ecommerce/assets/src/fonts/opensans-bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'open_sans_regular';
+    src: url('http://ecommerce/assets/src/fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}

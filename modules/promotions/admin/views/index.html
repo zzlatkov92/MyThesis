@@ -1,0 +1,84 @@
+<section class="page">
+	<header class="page__header">
+		<h1 class="page__title">
+			Списък с слайдери
+		</h1>
+
+		<a href="javascript:;" class="button page__button" ng-click="AddPromotion()">
+			Добави слайдер
+		</a>
+	</header>
+
+	<div class="page__content shell">
+		<div class="row">
+			<ng-include src="'http://ecommerce/partials/admin_sidebar.html'"></ng-include>
+
+			<div class="sidebar-neighbor medium-12 large-9 columns">
+				<form class="sidebar-neighbor medium-12 large-9 columns" ng-if="promotions.length">
+					<ng-include src="'http://ecommerce/partials/admin_page_search.html'"></ng-include>
+
+					<table>
+						<thead>
+							<tr>
+								<th>
+									Име
+								</th>
+								<th>
+									Период
+								</th>
+								<th>
+									Опции
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="promotion in promotions | filter:searchFilter | orderBy:'-PromotionId'">
+								<td>
+									#{{promotion.PromotionId}} <a href="javascript:;">{{promotion.PromotionName}}</a>
+								</td>
+								<td data-thead="Период">
+									{{promotion.PromotionDateStart | date:"MMMM d, yyyy"}} - {{promotion.PromotionDateEnd | date:"MMMM d, yyyy"}}
+								</td>
+								<td class="small">
+									<ul class="row">
+										<li class="small-6 columns">
+											<a href="javascript:;" class="button button--big button--icon" ng-click="EditPromotion(promotion.PromotionId)">
+												<svg viewBox="0 0 486.4 486.4">
+				                                   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_edit"></use>
+				                                </svg>
+											</a>
+										</li>
+										<li class="small-6 columns">
+											<a href="javascript:;" class="button button--big button--icon" ng-click="DeletePromotion(promotion.PromotionId)">
+												<svg viewBox="0 0 486.4 486.4">
+				                                   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_remove"></use>
+				                                </svg>
+											</a>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div class="notitification-placeholder" ng-if="!promotions.length">
+					<span class="notitification-placeholder__icon">
+						<svg viewBox="0 0 38 38">
+						   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_discount"></use>
+						</svg>
+					</span>
+					<h2 class="notitification-placeholder__title">
+						Няма добавени слайдери
+					</h2>
+					<p class="notitification-placeholder__message">
+						До момента не сте добавили нито една слайдер
+					</p>
+					<a href="javascript:;" class="button notitification-placeholder__button" ng-click="AddPromotion()">
+						Добави слайдер
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

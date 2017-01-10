@@ -1,0 +1,116 @@
+<article class="popup popup--medium" ng-controller="AdminPromotionsDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2 ng-if="promotion.PromotionId != null">
+			Редактирай слайдер #{{promotion.PromotionId}}
+		</h2>
+
+		<h2 ng-if="promotion.PromotionId == null">
+			Добави слайдер
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form autocomplete="off" name="editPromotion">
+			<input type="hidden" value="" ng-model="promotion.PromotionId" />
+
+			<ul>
+				<li class="input">
+					<label for="promotion_name" class="input__label">
+						Име
+					</label>
+					<input type="text" class="input__field" value="" ng-model="promotion.PromotionName" id="promotion_name" required="required" />
+				</li>
+				<li class="input">
+					<label for="promotion_link" class="input__label">
+						Линк
+					</label>
+					<input type="text" class="input__field" value="" ng-model="promotion.PromotionLink" name="url" id="promotion_link" ng-pattern="/^((https?|ftp):\\/\\/)?([a-z]+[.])?[a-z0-9-]+([.][a-z]{1,4}){1,2}(\\/.*[?].*)?$/i" />
+				</li>
+				<li class="form-notification form-notification--error" ng-if="editPromotion.url.$error.pattern">
+                	Въвели сте невалиден линк
+                </li>
+				<li class="input">
+					<label for="promotion_link" class="input__label">
+						Корица
+					</label>
+             		<div ngf-drop 
+             			ngf-select 
+             			ng-model="promotion.PromotionPhoto" 
+             			name="file" 
+             			class="dropbox" 
+				        ngf-drag-over-class="'dragover'" 
+				        ngf-allow-dir="true"
+				        accept="image/*" 
+				        ngf-pattern="'image/*'"
+				        ngf-min-width="1920"
+				        ngf-min-height="540"
+				        ngf-max-size="10MB"
+				        ng-required="promotion.PromotionPhoto == null"
+        			>
+        				Плъзни файла тук или избери от компютър
+        			</div>
+
+             		<ul class="thumbnails" ng-show="promotion.PromotionPhoto">
+             			<li class="thumbnails__thumbnail">
+             				<a href="{{promotion.PromotionPhoto | ngfDataUrl}}" target="_blank">
+             					<img class="thumbnails__thumbnail__image" 
+             						ngf-src="promotion.PromotionPhoto" alt="" 
+         						/> 
+             				</a>
+		             		<button class="thumbnails__thumbnail__button" ng-click="promotion.PromotionPhoto = null">
+		             			Премахни
+		             		</button>
+             			</li>
+             		</ul>
+
+             		<div class="form-notification form-notification--error" ng-if="editPromotion.file.$error.maxSize">
+		            	Корицата неможе да е по - голяма от 10MB
+		            </div>
+
+		            <div class="form-notification form-notification--error" ng-if="editPromotion.file.$error.minWidth">
+		            	Корицата неможе да е по - тясна от 1920px
+		            </div>
+
+		            <div class="form-notification form-notification--error" ng-if="editPromotion.file.$error.minHeight">
+		            	Корицата неможе да е по - ниска от 540px
+		            </div>
+				</li>
+				<li class="input">
+					<label for="date_start" class="input__label">
+						Валидност
+					</label>
+					<ul class="row">
+						<li class="small-6 columns">
+							<datepicker placeholder="Избери дата" ng-model='promotion.PromotionDateStart' name="date_start" date-format='MMMM d, yyyy' disable-timepicker='true' required></datepicker>
+							<div class="form-notification form-notification--error" ng-if="editPromotion.date_start.$error.pattern">
+			                	Въвели сте невалидна дата
+			                </div>
+						</li>
+						<li class="small-6 columns">
+							<datepicker placeholder="Избери дата" ng-model='promotion.PromotionDateEnd' date-format='MMMM d, yyyy' name="date_end" disable-timepicker='true' required></datepicker>
+							<div class="form-notification form-notification--error" ng-if="editPromotion.date_end.$error.pattern">
+			                	Въвели сте невалидна дата
+			                </div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+			<button type="submit" class="button--big" ng-click="savePromotion(promotion)"
+					ng-if="promotion.PromotionId != null" ng-disabled="editPromotion.$invalid"
+			>
+				Редактирай
+			</button>
+
+			<button type="submit" class="button--big" ng-click="savePromotion(promotion)"
+					ng-if="promotion.PromotionId == null" ng-disabled="editPromotion.$invalid"
+			>
+				Добави
+			</button>
+		</form>
+	</div>
+</article>

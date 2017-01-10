@@ -1,0 +1,48 @@
+<article class="popup popup--contacts" ng-controller="AdminContactsDetailsController">
+	<header class="popup__header">
+		<span class="popup__close" ng-click="closeThisDialog()">
+			<svg viewBox="0 0 475.2 475.2">
+			   <use xlink:href="http://ecommerce/assets/build/img/sprite.svg#icon_close"></use>
+			</svg>
+		</span>
+		<h2>
+			Отговор на запитване
+		</h2>
+	</header>
+	<div class="popup__content">
+		<form autocomplete="off" name="contactsAnswer">
+			<input type="hidden" value="" ng-model="contact.ContactId" />
+
+			<ul>
+				<li class="list-label">
+					<span>
+						Въпрос
+					</span>
+					{{contact.ContactTitle}}
+				</li>
+				<li class="list-label">
+					<span>
+						Изпратил
+					</span>
+					{{contact.ContactSender}}
+				</li>
+				<li class="list-label">
+					<span>
+						Съдържание
+					</span>
+					{{contact.ContactContext}}
+				</li>
+				<li class="input">
+					<label for="contact_answer" class="input__label">
+						Отговор
+					</label>
+					<textarea class="input__field" value="" ng-model="contact.ContactAnswer" id="contact_answer" required="required"></textarea>
+				</li>
+			</ul>
+
+			<button type="submit" class="button--big" ng-click="sendAnswer(contact)" ng-disabled="contactsAnswer.$invalid">
+				Изпрати отговор
+			</button>
+		</form>
+	</div>
+</article>

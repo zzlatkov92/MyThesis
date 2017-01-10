@@ -1,0 +1,31 @@
+.homepage__slider {
+	background: $color-gray-1;
+	border-top: 4px solid $color-gray-3;
+	border-bottom: 4px solid $color-gray-3;
+}
+.homepage__steps {
+	background: $color-gray-1;
+	@include generate-spacing(padding,6,top);
+	@include generate-spacing(padding,6,bottom);
+	@include generate-spacing(padding,2,left);
+	@include generate-spacing(padding,2,right);
+	.homepage__steps__row {
+		display: flex;
+		flex-wrap: wrap;
+		max-width: 100%;
+	}
+	h4 {
+		color: $main-color;
+	}
+	p {
+		color: $color-gray-8;
+	}
+}
+
+.homepage__products {
+	background: $color-gray-1;
+	border-top: 4px solid $color-gray-3;
+	border-bottom: 4px solid $color-gray-3;
+	@include generate-spacing(padding,4,top);
+	@include generate-spacing(padding,4,bottom);
+}

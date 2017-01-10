@@ -1,0 +1,20 @@
+@mixin generate-spacing($type, $amount, $position: 'all', $negative: false) {
+	@if ($position != 'all') {
+		@if ($negative == true) {
+			#{$type}-#{$position}: calc((5px + (#{$amount} * 0.4vmin)) * -1);
+		} @else {
+			#{$type}-#{$position}: calc(5px + (#{$amount} * 0.4vmin));
+		}
+	} @else {
+		@if ($negative == true) {
+			#{$type}: calc((5px + (#{$amount} * 0.4vmin)) * -1);
+		} @else {
+			#{$type}: calc(5px + (#{$amount} * 0.4vmin));
+		}
+	}
+}
+
+@mixin generate-font($size) {
+	font-size: calc(12px + (#{$size} * 0.4vmin));
+	line-height: calc(15px + (#{$size} * 0.4vmin));
+}
